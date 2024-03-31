@@ -1,0 +1,34 @@
+dr_mp3 - MP3 audio decoder
+	Downloaded from github on 3/4/2024, version v0.6.39
+	https://github.com/mackron/dr_libs/blob/master/dr_mp3.h
+	Added an implementation file following the header instructions.
+	License: Public Domain / MIT
+
+dr_wav - WAV audio loader and writer
+	Downloaded from github on 3/4/2024, version v0.13.16
+	https://github.com/mackron/dr_libs/blob/master/dr_wav.h
+	Added an implementation file following the header instructions.
+	License: Public Domain / MIT
+
+glm - header only mathematics library
+	Downloaded from github on 3/30/2024, version 1.0.1
+	https://github.com/g-truc/glm
+	License: Happy Bunny / MIT
+
+SDL - cross platform game development library
+	Website: https://libsdl.org/
+	Cloned from github on 3/3/2024, commit 9be35d4
+	https://github.com/libsdl-org/SDL
+	License: zlib
+
+stb_image - image loader
+	Downloaded from github on 3/4/2024, version v2.29
+	https://github.com/nothings/stb/blob/master/stb_image.h
+	Added an implementation file following the header instructions.
+	License: Public Domain / MIT
+
+stb_vorbis - Ogg Vorbis audio decoder
+	Downloaded from github on 3/4/2024, version 1.22
+	https://github.com/nothings/stb/blob/master/stb_vorbis.c
+	Modified to create a separate header per instructions in file.
+	License: Public Domain / MIT

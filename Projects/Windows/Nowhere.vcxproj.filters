@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{99cdc97e-fa6f-4c05-adc6-295dd9290521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{b77c1430-9c07-4443-9b3d-632aba26fae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Windows">
+      <UniqueIdentifier>{651b13de-feaf-48c3-983b-e2d1c76b6b66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Windows\main.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\dr_wav\dr_wav.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
