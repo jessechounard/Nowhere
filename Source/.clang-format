@@ -1,0 +1,11 @@
+---
+BasedOnStyle: Microsoft
+---
+Language: Cpp
+ColumnLimit: 100
+NamespaceIndentation: All
+AlignAfterOpenBracket: DontAlign
+PackConstructorInitializers: Never
+AlwaysBreakTemplateDeclarations: true
+---
+

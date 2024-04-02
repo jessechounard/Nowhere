@@ -10,16 +10,28 @@ dr_wav - WAV audio loader and writer
 	Added an implementation file following the header instructions.
 	License: Public Domain / MIT
 
+glad - Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader
+	Generated with the glad 2 webservice, v2.0.6
+	https://gen.glad.sh/
+	Added an implementation file following the header instructions.
+	License: MIT
+
 glm - header only mathematics library
 	Downloaded from github on 3/30/2024, version 1.0.1
 	https://github.com/g-truc/glm
 	License: Happy Bunny / MIT
 
 SDL - cross platform game development library
+	Using SDL3 before the 3.0 release.
 	Website: https://libsdl.org/
 	Cloned from github on 3/3/2024, commit 9be35d4
 	https://github.com/libsdl-org/SDL
 	License: zlib
+
+spdlog - header only C++ logging library
+	Downloaded from github on 3/30/2024, version 1.13.0
+	https://github.com/gabime/spdlog
+	License: MIT
 
 stb_image - image loader
 	Downloaded from github on 3/4/2024, version v2.29

@@ -1,0 +1,21 @@
+If this isn't working, the debug -> Working Directory needs to be set to $(OutDir)
+and the texture needs to be manually copied there.
+
+- Clean up logging. (Either use SDL_Log or spdlog.)
+- GraphicsDevice.cpp todos
+	- Test render target rendering
+	- Test render targets with scissor rectangles
+- ShaderProgram.hpp
+	- Handle todo about SetParameter
+- Asset loader
+- BatchRenderer
+	- Clean up todos
+- Particle system
+- Animations
+- Gamepad input
+- Mouse Input
+- Keyboard Input
+- Audio
+- Hex grid tiles layout
+- Pathfinding
+- IMGui
