@@ -7,10 +7,20 @@
 #include <Lucky/Graphics/BatchRenderer.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
+#include <Lucky/Input/Keyboard.hpp>
+#include <Lucky/Input/Mouse.hpp>
+
+Lucky::KeyboardState previousKeyboardState, currentKeyboardState;
+Lucky::MouseState previousMouseState, currentMouseState;
 
 int main()
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+    memset(&currentKeyboardState, 0, sizeof(currentKeyboardState));
+    memset(&previousKeyboardState, 0, sizeof(previousKeyboardState));
+    memset(&previousMouseState, 0, sizeof(currentMouseState));
+    memset(&currentMouseState, 0, sizeof(currentMouseState));
 
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
     {
@@ -49,6 +59,9 @@ int main()
     int renderCount = 0;
     int updateCount = 0;
 
+    previousKeyboardState = currentKeyboardState;
+    previousMouseState = currentMouseState;
+
     while (!quit)
     {
         uint64_t newTime = SDL_GetPerformanceCounter();
@@ -85,6 +98,53 @@ int main()
                     }
                     break;
 
+                case SDL_EVENT_KEY_DOWN:
+                    if (event.key.keysym.scancode >= 0 &&
+                        event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
+                    {
+                        currentKeyboardState.keys[event.key.keysym.scancode] = true;
+                    }
+
+                    break;
+
+                case SDL_EVENT_KEY_UP:
+                    if (event.key.keysym.scancode >= 0 &&
+                        event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
+                    {
+                        currentKeyboardState.keys[event.key.keysym.scancode] = false;
+                    }
+                    break;
+
+                case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                    if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
+                    {
+                        currentMouseState.buttons[event.button.button] = true;
+                    }
+                    break;
+
+                case SDL_EVENT_MOUSE_BUTTON_UP:
+                    if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
+                    {
+                        currentMouseState.buttons[event.button.button] = false;
+                    }
+                    break;
+
+                case SDL_EVENT_MOUSE_MOTION:
+                    currentMouseState.x = event.motion.x;
+                    currentMouseState.y = event.motion.y;
+                    break;
+
+                case SDL_EVENT_MOUSE_WHEEL:
+                    if (event.wheel.direction != SDL_MOUSEWHEEL_FLIPPED)
+                    {
+                        currentMouseState.wheelDelta += event.wheel.y;
+                    }
+                    else
+                    {
+                        currentMouseState.wheelDelta -= event.wheel.y;
+                    }
+                    break;
+
                 default:
                     break;
                 }
@@ -93,7 +153,7 @@ int main()
             if (quit)
                 break;
 
-			//game->Update(static_cast<float>(dt));
+            // game->Update(static_cast<float>(dt));
             updateCount++;
 
             // debug code begin
@@ -104,10 +164,10 @@ int main()
         // If we updated at least once since the last render, render again
         if (renderRequired && !quit)
         {
-			graphicsDevice->BeginFrame();
+            graphicsDevice->BeginFrame();
             graphicsDevice->ClearScreen(Lucky::Color::CornflowerBlue);
 
-            //game->Render();
+            // game->Render();
             renderCount++;
 
             // debug code begin
@@ -131,4 +191,24 @@ int main()
     SDL_Quit();
 
     return 0;
+}
+
+const Lucky::KeyboardState &GetPreviousKeyboardState_impl()
+{
+    return previousKeyboardState;
+}
+
+const Lucky::KeyboardState &GetCurrentKeyboardState_impl()
+{
+    return currentKeyboardState;
+}
+
+const Lucky::MouseState &GetPreviousMouseState_impl()
+{
+    return previousMouseState;
+}
+
+const Lucky::MouseState &GetCurrentMouseState_impl()
+{
+    return currentMouseState;
 }

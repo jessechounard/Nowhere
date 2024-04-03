@@ -178,6 +178,8 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\ShaderProgram.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Texture.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Math\MathConstants.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Math\MathHelpers.cpp" />
     <ClCompile Include="..\..\Source\Windows\main.cpp" />
@@ -190,6 +192,8 @@
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Texture.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Keyboard.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Mouse.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathConstants.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathHelpers.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Rectangle.hpp" />

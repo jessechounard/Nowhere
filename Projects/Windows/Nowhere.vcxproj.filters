@@ -49,6 +49,12 @@
     <Filter Include="Dependencies\glad">
       <UniqueIdentifier>{5fe56939-161d-4197-a592-fb9914049217}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Lucky\Include\Input">
+      <UniqueIdentifier>{63baae36-4f1d-4cfb-92cc-c68cef6956ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Lucky\Source\Input">
+      <UniqueIdentifier>{b31cad39-ade7-4553-b2fe-6dc2b4ca924d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Windows\main.cpp">
@@ -93,6 +99,12 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp">
       <Filter>Source\Lucky\Source\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp">
+      <Filter>Source\Lucky\Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp">
+      <Filter>Source\Lucky\Source\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp">
@@ -133,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp">
       <Filter>Source\Lucky\Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Mouse.hpp">
+      <Filter>Source\Lucky\Include\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Keyboard.hpp">
+      <Filter>Source\Lucky\Include\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

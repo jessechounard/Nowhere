@@ -13,9 +13,13 @@ and the texture needs to be manually copied there.
 - Particle system
 - Animations
 - Gamepad input
-- Mouse Input
-- Keyboard Input
 - Audio
 - Hex grid tiles layout
 - Pathfinding
 - IMGui
+- Camera
+- TextureAtlas
+- Random numbers
+- Collision
+- File System
+- State Machines
