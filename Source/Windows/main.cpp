@@ -56,9 +56,6 @@ int main()
     uint64_t currentTime = SDL_GetPerformanceCounter();
     double accumulator = 0.0;
 
-    int renderCount = 0;
-    int updateCount = 0;
-
     previousKeyboardState = currentKeyboardState;
     previousMouseState = currentMouseState;
 
@@ -154,7 +151,6 @@ int main()
                 break;
 
             // game->Update(static_cast<float>(dt));
-            updateCount++;
 
             // debug code begin
             rotation += dt;
@@ -165,10 +161,10 @@ int main()
         if (renderRequired && !quit)
         {
             graphicsDevice->BeginFrame();
+
             graphicsDevice->ClearScreen(Lucky::Color::CornflowerBlue);
 
             // game->Render();
-            renderCount++;
 
             // debug code begin
             batchRenderer.Begin(Lucky::BlendMode::Alpha, texture);

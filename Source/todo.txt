@@ -2,9 +2,6 @@ If this isn't working, the debug -> Working Directory needs to be set to $(OutDi
 and the texture needs to be manually copied there.
 
 - Clean up logging. (Either use SDL_Log or spdlog.)
-- GraphicsDevice.cpp todos
-	- Test render target rendering
-	- Test render targets with scissor rectangles
 - ShaderProgram.hpp
 	- Handle todo about SetParameter
 - Asset loader
@@ -18,8 +15,5 @@ and the texture needs to be manually copied there.
 - Pathfinding
 - IMGui
 - Camera
-- TextureAtlas
-- Random numbers
-- Collision
-- File System
-- State Machines
+- Random numbers (implement SquirrelNoise?)
+- Font/Text rendering

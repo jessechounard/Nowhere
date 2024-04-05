@@ -68,6 +68,7 @@ namespace Lucky
 
         void BindTexture(const Texture &texture);
 
+        // Note: if you don't set the viewport, scissor rectangles might not work properly
         void BindRenderTarget(const Texture &texture, bool setViewport = true);
         void UnbindRenderTarget(bool resetViewport = true);
         bool IsUsingRenderTarget() const;

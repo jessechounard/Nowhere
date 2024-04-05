@@ -103,11 +103,6 @@ namespace Lucky
     void GraphicsDevice::SetViewport(const Rectangle &vp)
     {
         viewport = vp;
-
-        // todo: there used to be code here to invert the viewport when using
-        // a render target. Now that's done in BatchRenderer (I think!)
-        // Do we need that?
-
         glViewport(viewport.x, viewport.y, viewport.width, viewport.height);
     }
 
@@ -172,15 +167,12 @@ namespace Lucky
 
     void GraphicsDevice::EnableScissorsRectangle(const Rectangle &scissorsRect)
     {
-        // todo: This is probably broken when using render targets
-        // we shouldn't be using screenHeight
-
         scissorsEnabled = true;
         scissorsRectangle = scissorsRect;
 
         if (!IsUsingRenderTarget())
         {
-            scissorsRectangle.y = screenHeight - scissorsRectangle.y - scissorsRectangle.height;
+            scissorsRectangle.y = viewport.height - scissorsRectangle.y - scissorsRectangle.height;
         }
 
         glEnable(GL_SCISSOR_TEST);
@@ -190,7 +182,7 @@ namespace Lucky
 
     void GraphicsDevice::DisableScissorsRectangle()
     {
-        glEnable(GL_SCISSOR_TEST);
+        glDisable(GL_SCISSOR_TEST);
         scissorsEnabled = false;
     }
 

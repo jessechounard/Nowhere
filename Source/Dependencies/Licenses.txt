@@ -21,6 +21,11 @@ glm - header only mathematics library
 	https://github.com/g-truc/glm
 	License: Happy Bunny / MIT
 
+rapidjson - header only JSON parser/generator
+	Downloaded from github on 3/30/2024, version v1.1.0
+	https://github.com/Tencent/rapidjson/
+	License: Happy Bunny / MIT
+
 SDL - cross platform game development library
 	Using SDL3 before the 3.0 release.
 	Website: https://libsdl.org/
@@ -44,3 +49,9 @@ stb_vorbis - Ogg Vorbis audio decoder
 	https://github.com/nothings/stb/blob/master/stb_vorbis.c
 	Modified to create a separate header per instructions in file.
 	License: Public Domain / MIT
+
+SquirrelNoise - Squirrel's Raw Noise Utilities
+	Downloaded from author's website, version 5
+	http://eiserloh.net/noise/SquirrelNoise5.hpp
+	See also: https://www.youtube.com/watch?v=LWFzPP8ZbdU
+	License: CC-BY-3.0 US (Attribution)
