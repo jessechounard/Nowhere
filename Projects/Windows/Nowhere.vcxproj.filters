@@ -58,6 +58,12 @@
     <Filter Include="Source\Lucky\Source\Utility">
       <UniqueIdentifier>{c67a9330-d465-4cdc-8f8d-f477a6541408}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dependencies\imgui">
+      <UniqueIdentifier>{ea214b9e-9451-4abb-ab5b-15dacfc5cb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\imgui\backends">
+      <UniqueIdentifier>{8269c124-1ed9-4f08-a994-2e048dba8d0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Windows\main.cpp">
@@ -122,6 +128,27 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\TextureAtlas.cpp">
       <Filter>Source\Lucky\Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Dependencies\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_sdl3.cpp">
+      <Filter>Dependencies\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_draw.cpp">
+      <Filter>Dependencies\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_tables.cpp">
+      <Filter>Dependencies\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_widgets.cpp">
+      <Filter>Dependencies\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui.cpp">
+      <Filter>Dependencies\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_demo.cpp">
+      <Filter>Dependencies\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +217,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Random.hpp">
       <Filter>Source\Lucky\Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_opengl3.h">
+      <Filter>Dependencies\imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_sdl3.h">
+      <Filter>Dependencies\imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imgui_internal.h">
+      <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_rectpack.h">
+      <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_textedit.h">
+      <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_truetype.h">
+      <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imconfig.h">
+      <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\imgui\imgui.h">
+      <Filter>Dependencies\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

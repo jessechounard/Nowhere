@@ -4,6 +4,10 @@
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_opengl3.h>
+
 #include <Lucky/Graphics/BatchRenderer.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
@@ -12,6 +16,29 @@
 
 Lucky::KeyboardState previousKeyboardState, currentKeyboardState;
 Lucky::MouseState previousMouseState, currentMouseState;
+
+void InitializeImGui(SDL_Window *window, void *glContext)
+{
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
+
+    ImGui::StyleColorsDark();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplSDL3_InitForOpenGL(window, glContext);
+    ImGui_ImplOpenGL3_Init(nullptr);
+}
+
+void RenderImGui(SDL_Window *window, void *glContext)
+{
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
 int main()
 {
@@ -41,6 +68,8 @@ int main()
 
     auto graphicsDevice = std::make_shared<Lucky::GraphicsDevice>(
         Lucky::GraphicsAPI::OpenGL, window, Lucky::VerticalSyncType::AdaptiveEnabled);
+
+    InitializeImGui(window, graphicsDevice->GetGLContext());
 
     // debug code begin
     auto texture = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Linear, "temp.png");
@@ -81,6 +110,9 @@ int main()
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
+                ImGui_ImplSDL3_ProcessEvent(&event);
+                auto &io = ImGui::GetIO();
+
                 switch (event.type)
                 {
                 case SDL_EVENT_QUIT:
@@ -96,6 +128,10 @@ int main()
                     break;
 
                 case SDL_EVENT_KEY_DOWN:
+                    if (io.WantCaptureKeyboard)
+                    {
+                        break;
+                    }
                     if (event.key.keysym.scancode >= 0 &&
                         event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
@@ -105,6 +141,10 @@ int main()
                     break;
 
                 case SDL_EVENT_KEY_UP:
+                    if (io.WantCaptureKeyboard)
+                    {
+                        break;
+                    }
                     if (event.key.keysym.scancode >= 0 &&
                         event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
@@ -113,6 +153,10 @@ int main()
                     break;
 
                 case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                    if (io.WantCaptureMouse)
+                    {
+                        break;
+                    }
                     if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
                     {
                         currentMouseState.buttons[event.button.button] = true;
@@ -120,6 +164,10 @@ int main()
                     break;
 
                 case SDL_EVENT_MOUSE_BUTTON_UP:
+                    if (io.WantCaptureMouse)
+                    {
+                        break;
+                    }
                     if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
                     {
                         currentMouseState.buttons[event.button.button] = false;
@@ -127,11 +175,19 @@ int main()
                     break;
 
                 case SDL_EVENT_MOUSE_MOTION:
+                    if (io.WantCaptureMouse)
+                    {
+                        break;
+                    }
                     currentMouseState.x = event.motion.x;
                     currentMouseState.y = event.motion.y;
                     break;
 
                 case SDL_EVENT_MOUSE_WHEEL:
+                    if (io.WantCaptureMouse)
+                    {
+                        break;
+                    }
                     if (event.wheel.direction != SDL_MOUSEWHEEL_FLIPPED)
                     {
                         currentMouseState.wheelDelta += event.wheel.y;
@@ -150,10 +206,19 @@ int main()
             if (quit)
                 break;
 
+			ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplSDL3_NewFrame();
+            ImGui::NewFrame();
+
+            bool show_demo_window = true;
+            ImGui::ShowDemoWindow(&show_demo_window);
+
+            ImGui::EndFrame();
+
             // game->Update(static_cast<float>(dt));
 
             // debug code begin
-            rotation += dt;
+            rotation += (float)dt;
             // debug code end
         }
 
@@ -178,9 +243,15 @@ int main()
 
             graphicsDevice->EndFrame();
 
+            RenderImGui(window, graphicsDevice->GetGLContext());
+
             SDL_GL_SwapWindow(window);
         }
     }
+
+	ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
+    ImGui::DestroyContext();
 
     graphicsDevice.reset();
     SDL_DestroyWindow(window);

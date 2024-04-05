@@ -1,19 +1,18 @@
 If this isn't working, the debug -> Working Directory needs to be set to $(OutDir)
 and the texture needs to be manually copied there.
 
+- Camera
+- Gamepad input
+- Asset loader
+- Audio
+- Font/Text rendering
+- Particle system
+- Animations
+- Hex grid tiles layout
+- Pathfinding
 - Clean up logging. (Either use SDL_Log or spdlog.)
 - ShaderProgram.hpp
 	- Handle todo about SetParameter
-- Asset loader
 - BatchRenderer
 	- Clean up todos
-- Particle system
-- Animations
-- Gamepad input
-- Audio
-- Hex grid tiles layout
-- Pathfinding
-- IMGui
-- Camera
-- Random numbers (implement SquirrelNoise?)
-- Font/Text rendering
+- IMGui (switch to docking branch for multi-viewports?)

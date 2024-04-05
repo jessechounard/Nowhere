@@ -21,6 +21,12 @@ glm - header only mathematics library
 	https://github.com/g-truc/glm
 	License: Happy Bunny / MIT
 
+imgui - Bloat-free Graphical User interface for C++ with minimal dependencies
+	Downloaded from github on 4/5/2024, version v1.90.4
+	https://github.com/ocornut/imgui/
+	Copied entire folder structure as recommended in the examples
+	License: MIT
+
 rapidjson - header only JSON parser/generator
 	Downloaded from github on 3/30/2024, version v1.1.0
 	https://github.com/Tencent/rapidjson/
