@@ -33,13 +33,20 @@ namespace Lucky
     {
         if (transformDirty)
         {
-            transformMatrix =
-                glm::translate(glm::rotate(glm::scale(glm::translate(glm::mat4(1.0f),
-                                                          glm::vec3(position.x, position.y, 0)),
-                                               glm::vec3(zoom, zoom, 1.0f)),
-                                   rotation, glm::vec3(0.0f, 0.0f, 1.0f)),
-                    glm::vec3(-position.x, -position.y, 0));
+            Rectangle viewport;
+            graphicsDevice->GetViewport(viewport);
 
+            // having these broken out into multiple transforms and not
+            // chained might be less efficient (?) but it's way more readable
+            // todo: test this
+            auto transform = glm::mat4(1.0f);
+            transform = glm::translate(
+                transform, glm::vec3(viewport.width / 2.0f, viewport.height / 2.0f, 0.0));
+            transform = glm::scale(transform, glm::vec3(zoom, zoom, 1.0));
+            transform = glm::rotate(transform, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+            transform = glm::translate(transform, glm::vec3(-position.x, -position.y, 0.0f));
+
+            transformMatrix = transform;
             transformDirty = false;
         }
     }

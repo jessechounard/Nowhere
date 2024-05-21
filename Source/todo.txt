@@ -1,15 +1,18 @@
 If this isn't working, the debug -> Working Directory needs to be set to $(OutDir)
 and the texture needs to be manually copied there.
 
+- ECS / GameObjects?
 - Camera
-- Gamepad input
 - Asset loader
 - Audio
+	- wav files
+	- music files (ogg/mp3)
 - Font/Text rendering
 - Particle system
 - Animations
 - Hex grid tiles layout
 - Pathfinding
+- Gamepad input
 - Clean up logging. (Either use SDL_Log or spdlog.)
 - ShaderProgram.hpp
 	- Handle todo about SetParameter

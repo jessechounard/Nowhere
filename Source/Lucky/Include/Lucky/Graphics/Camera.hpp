@@ -11,7 +11,8 @@
 
 namespace Lucky
 {
-	struct GraphicsDevice;
+	// todo: This stuff (mostly) works, but it should probably be refactored
+	// to be built from components and work like other "game objects"
 
 	struct Camera
 	{
@@ -22,8 +23,6 @@ namespace Lucky
 			std::shared_ptr<Texture> renderTarget);
 
 		virtual ~Camera() { }
-
-		float foo = 0;
 
 		virtual void Update(float deltaSeconds) { }
 
