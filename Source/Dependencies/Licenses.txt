@@ -40,9 +40,15 @@ SDL - cross platform game development library
 	License: zlib
 
 spdlog - header only C++ logging library
-	Downloaded from github on 3/30/2024, version 1.13.0
+	Downloaded from github on 9/10/2024, version 1.14.1
 	https://github.com/gabime/spdlog
 	License: MIT
+
+SquirrelNoise - Squirrel's Raw Noise Utilities
+	Downloaded from author's website, version 5
+	http://eiserloh.net/noise/SquirrelNoise5.hpp
+	See also: https://www.youtube.com/watch?v=LWFzPP8ZbdU
+	License: CC-BY-3.0 US (Attribution)
 
 stb_image - image loader
 	Downloaded from github on 3/4/2024, version v2.29
@@ -55,9 +61,3 @@ stb_vorbis - Ogg Vorbis audio decoder
 	https://github.com/nothings/stb/blob/master/stb_vorbis.c
 	Modified to create a separate header per instructions in file.
 	License: Public Domain / MIT
-
-SquirrelNoise - Squirrel's Raw Noise Utilities
-	Downloaded from author's website, version 5
-	http://eiserloh.net/noise/SquirrelNoise5.hpp
-	See also: https://www.youtube.com/watch?v=LWFzPP8ZbdU
-	License: CC-BY-3.0 US (Attribution)

@@ -175,6 +175,7 @@
     <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c" />
     <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
