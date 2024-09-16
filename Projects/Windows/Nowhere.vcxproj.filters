@@ -159,6 +159,9 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp">
       <Filter>Source\Lucky\Source\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp">
+      <Filter>Source\Lucky\Source\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp">
@@ -250,6 +253,27 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Dependencies\imgui\imgui.h">
       <Filter>Dependencies\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp">
+      <Filter>Source\Lucky\Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.h">
+      <Filter>Dependencies\dr_mp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\dr_wav\dr_wav.h">
+      <Filter>Dependencies\dr_wav</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\glad\glad\gl.h">
+      <Filter>Dependencies\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_image\stb_image.h">
+      <Filter>Dependencies\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h">
+      <Filter>Dependencies\stb_vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp">
+      <Filter>Source\Lucky\Include\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,9 @@ and the texture needs to be manually copied there.
 - Camera
 - Asset loader
 - Audio
-	- wav files
+	- enumerate playback devices
 	- music files (ogg/mp3)
+	- audio capture?
 - Font/Text rendering
 - Particle system
 - Animations

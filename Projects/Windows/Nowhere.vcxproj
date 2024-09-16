@@ -176,6 +176,7 @@
     <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c" />
     <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
@@ -194,6 +195,9 @@
     <ClCompile Include="..\..\Source\Windows\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.h" />
+    <ClInclude Include="..\..\Source\Dependencies\dr_wav\dr_wav.h" />
+    <ClInclude Include="..\..\Source\Dependencies\glad\glad\gl.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_sdl3.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\imconfig.h" />
@@ -202,6 +206,10 @@
     <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_image\stb_image.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp" />

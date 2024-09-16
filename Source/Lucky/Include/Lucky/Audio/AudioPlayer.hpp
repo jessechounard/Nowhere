@@ -1,47 +1,69 @@
+#include <functional>
+#include <memory>
 #include <stdint.h>
+#include <string>
+#include <vector>
+
+#include <SDL3/SDL_audio.h>
+#include <dr_wav.h>
+
+#include <Lucky/Audio/Sound.hpp>
 
 namespace Lucky
 {
-    // a simple sound effect, loaded fully into memory
-    class Sound
+    typedef uint32_t AudioRef;
+
+    enum class AudioEvent
     {
-        uint32_t sampleCount;
-        uint16_t sampleRate;
-        uint16_t channels;
-        int16_t samples[1];
+        Complete,
+        Looped,
+        Error
     };
 
-    // a compressed sound, decoded and streamed at runtime
-    class Song
+    typedef std::function<void(const AudioRef &, const AudioEvent &)> AudioCallbackFunction;
+
+    struct AudioInstance;
+
+    struct SoundGroupSettings
     {
+        SDL_AudioDeviceID deviceId = SDL_AUDIO_DEVICE_DEFAULT_OUTPUT;
+        float volume = 1.0f;
     };
 
     class AudioPlayer
     {
       public:
-        // todo: Do we need to allow select something other than the default output?
-        AudioPlayer();
-        AudioPlayer(const AudioPlayer &) = delete;
-        AudioPlayer(const AudioPlayer &&) = delete;
+        AudioPlayer(SoundGroupSettings defaultSoundGroupSettings = SoundGroupSettings());
         ~AudioPlayer();
 
+        void CreateSoundGroup(const std::string &soundGroupName, SoundGroupSettings settings = SoundGroupSettings());
+        void DestroySoundGroup(const std::string &soundGroupName);
+
+        void StopGroup(const std::string &soundGroupName);
+        void PauseGroup(const std::string &soundGroupName);
+        void ResumeGroup(const std::string &soundGroupName);
+
+        SDL_AudioDeviceID GetGroupDeviceId(const std::string &soundGroupName);
+        float GetGroupVolume(const std::string &soundGroupName);
+
+        // todo: replace these booleans with enum types
+        AudioRef Play(std::shared_ptr<Sound> sound, const std::string &soundGroupName = "default",
+            const bool beginPaused = false, const bool loop = false, AudioCallbackFunction audioCallback = nullptr);
+        void Pause(const AudioRef &audioRef);
+        void Resume(const AudioRef &audioRef);
+        void Stop(const AudioRef &audioRef);
+
+      private:
+        AudioPlayer(const AudioPlayer &) = delete;
+        AudioPlayer(const AudioPlayer &&) = delete;
         AudioPlayer &operator=(const AudioPlayer &) = delete;
         AudioPlayer &operator=(const AudioPlayer &&) = delete;
 
-        /*
-        * create audio group
-        * stop audio group (with fade or immediate)
-        * pause audio group (with fade or immediate)
-        * resume audio group (fade back in?)
-        * 
-        * play song (on group or create group)
-        * play sound (on group or create group)
-        * 
-        * pause all (with fade or immediate)
-        * stop all (with fade or immediate)
-        * 
-        */
+        void AudioCallback(AudioInstance *instance, int bytesRequested);
 
-      private:
+        friend void SDLCallback(void *userData, SDL_AudioStream *stream, int additionalAmount, int totalBytes);
+
+        struct Impl;
+        std::unique_ptr<Impl> pImpl;
     };
-}
+} // namespace Lucky

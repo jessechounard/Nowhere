@@ -8,6 +8,8 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
 
+#include <Lucky/Audio/AudioPlayer.hpp>
+#include <Lucky/Audio/Sound.hpp>
 #include <Lucky/Graphics/BatchRenderer.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
@@ -95,6 +97,11 @@ int main()
     auto texture = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Linear, "temp.png");
     float rotation = 0;
     Lucky::BatchRenderer batchRenderer(graphicsDevice, 1024);
+
+    auto sound = std::make_shared<Lucky::Sound>("test.wav");
+    std::unique_ptr<Lucky::AudioPlayer> audioPlayer = std::make_unique<Lucky::AudioPlayer>();
+
+    audioPlayer->Play(sound);
     // debug code end
 
     bool quit = false;
@@ -287,6 +294,8 @@ int main()
 	ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
+
+    audioPlayer.reset();
 
     graphicsDevice.reset();
     SDL_DestroyWindow(window);

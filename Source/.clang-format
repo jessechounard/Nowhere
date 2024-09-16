@@ -2,7 +2,7 @@
 BasedOnStyle: Microsoft
 ---
 Language: Cpp
-ColumnLimit: 100
+ColumnLimit: 120
 NamespaceIndentation: All
 AlignAfterOpenBracket: DontAlign
 PackConstructorInitializers: Never
