@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp" />

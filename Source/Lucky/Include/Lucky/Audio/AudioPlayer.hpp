@@ -1,3 +1,5 @@
+#pragma once
+
 #include <functional>
 #include <memory>
 #include <stdint.h>
@@ -8,6 +10,7 @@
 #include <dr_wav.h>
 
 #include <Lucky/Audio/Sound.hpp>
+#include <Lucky/Audio/Stream.hpp>
 
 namespace Lucky
 {
@@ -48,6 +51,8 @@ namespace Lucky
 
         // todo: replace these booleans with enum types
         AudioRef Play(std::shared_ptr<Sound> sound, const std::string &soundGroupName = "default",
+            const bool beginPaused = false, const bool loop = false, AudioCallbackFunction audioCallback = nullptr);
+        AudioRef Play(std::shared_ptr<Stream> stream, const std::string &soundGroupName = "default",
             const bool beginPaused = false, const bool loop = false, AudioCallbackFunction audioCallback = nullptr);
         void Pause(const AudioRef &audioRef);
         void Resume(const AudioRef &audioRef);

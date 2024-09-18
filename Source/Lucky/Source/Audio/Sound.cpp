@@ -48,5 +48,4 @@ namespace Lucky
 
         drwav_free(drwavSamples, nullptr);
     }
-
 } // namespace Lucky

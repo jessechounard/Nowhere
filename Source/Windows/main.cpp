@@ -5,11 +5,12 @@
 #include <SDL3/SDL.h>
 
 #include <imgui.h>
-#include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
 
 #include <Lucky/Audio/AudioPlayer.hpp>
 #include <Lucky/Audio/Sound.hpp>
+#include <Lucky/Audio/Stream.hpp>
 #include <Lucky/Graphics/BatchRenderer.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
@@ -26,8 +27,8 @@ void InitializeImGui(SDL_Window *window, void *glContext)
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
-    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
+    // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+    // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 
     ImGui::StyleColorsDark();
 
@@ -47,10 +48,9 @@ static void ShowFPSOverlay(int updateCount, int renderCount)
     const float DISTANCE = 10.0f;
     static int corner = 2;
     ImGuiIO &io = ImGui::GetIO();
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration |
-                                    ImGuiWindowFlags_AlwaysAutoResize |
-                                    ImGuiWindowFlags_NoSavedSettings |
-                                    ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
+                                    ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing |
+                                    ImGuiWindowFlags_NoNav;
     ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
     bool temp = true;
     if (ImGui::Begin("FPS Overlay", &temp, window_flags))
@@ -99,9 +99,12 @@ int main()
     Lucky::BatchRenderer batchRenderer(graphicsDevice, 1024);
 
     auto sound = std::make_shared<Lucky::Sound>("test.wav");
+    auto stream = std::make_shared<Lucky::Stream>("test.ogg");
+
     std::unique_ptr<Lucky::AudioPlayer> audioPlayer = std::make_unique<Lucky::AudioPlayer>();
 
-    audioPlayer->Play(sound);
+    // audioPlayer->Play(sound);
+    audioPlayer->Play(stream, "default", false, true);
     // debug code end
 
     bool quit = false;
@@ -112,7 +115,7 @@ int main()
     uint64_t currentTime = SDL_GetPerformanceCounter();
     double accumulator = 0.0;
 
-	double fpsTimer = 0;
+    double fpsTimer = 0;
     int renderCount = 0, updateCount = 0;
     int guiUpdateCount = 0, guiRenderCount = 0;
 
@@ -163,8 +166,7 @@ int main()
                     {
                         break;
                     }
-                    if (event.key.keysym.scancode >= 0 &&
-                        event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
+                    if (event.key.keysym.scancode >= 0 && event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
                         currentKeyboardState.keys[event.key.keysym.scancode] = true;
                     }
@@ -176,8 +178,7 @@ int main()
                     {
                         break;
                     }
-                    if (event.key.keysym.scancode >= 0 &&
-                        event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
+                    if (event.key.keysym.scancode >= 0 && event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
                         currentKeyboardState.keys[event.key.keysym.scancode] = false;
                     }
@@ -237,7 +238,7 @@ int main()
             if (quit)
                 break;
 
-			ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
 
@@ -253,7 +254,7 @@ int main()
             rotation += (float)dt;
             // debug code end
 
-			fpsTimer += dt;
+            fpsTimer += dt;
             if (Lucky::ApproximatelyEqual((float)fpsTimer, 1.0f) || fpsTimer > 1.0f)
             {
                 guiUpdateCount = updateCount;
@@ -276,9 +277,8 @@ int main()
             // debug code begin
             batchRenderer.Begin(Lucky::BlendMode::Alpha, texture, nullptr);
 
-            batchRenderer.BatchQuad(nullptr, glm::vec2(1920 / 2.0f, 1080 / 2.0f), rotation,
-                glm::vec2(1.0f, 1.0f), glm::vec2(0.5f, 0.5f), Lucky::UVMode::Normal,
-                Lucky::Color::White);
+            batchRenderer.BatchQuad(nullptr, glm::vec2(1920 / 2.0f, 1080 / 2.0f), rotation, glm::vec2(1.0f, 1.0f),
+                glm::vec2(0.5f, 0.5f), Lucky::UVMode::Normal, Lucky::Color::White);
 
             batchRenderer.End();
             // debug code end
@@ -291,7 +291,7 @@ int main()
         }
     }
 
-	ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 

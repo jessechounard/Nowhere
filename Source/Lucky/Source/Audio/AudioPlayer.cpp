@@ -36,7 +36,7 @@ namespace Lucky
         {
         }
 
-        virtual uint32_t PutSamplesSDL(int bytesRequested) = 0;
+        virtual void PutSamplesSDL(int bytesRequested) = 0;
 
         SDL_AudioStream *audioStream;
         AudioPlayer *audioPlayer;
@@ -53,7 +53,7 @@ namespace Lucky
         {
         }
 
-        uint32_t PutSamplesSDL(int bytesRequested)
+        void PutSamplesSDL(int bytesRequested)
         {
             uint32_t framesRequested = bytesRequested / sizeof(int16_t) / sound->channels;
             uint32_t framesAvailable = sound->frameCount - samplePosition;
@@ -86,14 +86,11 @@ namespace Lucky
                 if (loop && samplePosition == sound->frameCount)
                 {
                     samplePosition = 0;
-                    return bytesToPut + PutSamplesSDL(bytesRequested - bytesToPut);
+                    PutSamplesSDL(bytesRequested - bytesToPut);
                 }
-                else
-                {
-                    return bytesToPut;
-                }
+                // todo: if didLoop == true, report loop to audioplayer
+                // todo: if frameCount < framesRequested, stop and report stopped to audioPlayer
             }
-            return 0;
         }
 
         std::shared_ptr<Sound> sound;
@@ -102,8 +99,64 @@ namespace Lucky
 
     struct StreamInstance : public AudioInstance
     {
-        uint32_t PutSamplesSDL(int bytesRequested)
+        std::unique_ptr<Stream> stream;
+
+        StreamInstance(std::shared_ptr<Stream> stream, const ::std::string &soundGroupName, bool loop,
+            AudioCallbackFunction audioCallback, AudioState audioState, AudioPlayer *audioPlayer)
         {
+            this->stream = std::make_unique<Stream>(*stream);
+            this->loop = loop;
+            this->audioCallback = audioCallback;
+            this->audioState = audioState;
+            this->audioPlayer = audioPlayer;
+            this->soundGroupName = soundGroupName;
+
+            SDL_AudioSpec sourceSpec;
+            sourceSpec.channels = this->stream->channels;
+            sourceSpec.freq = this->stream->sampleRate;
+            sourceSpec.format = SDL_AUDIO_S16;
+
+            SDL_AudioSpec outputSpec;
+            outputSpec.channels = 2;
+            outputSpec.freq = 48000;
+            outputSpec.format = SDL_AUDIO_S16;
+
+            SDL_AudioStream *audioStream = SDL_CreateAudioStream(&sourceSpec, &outputSpec);
+            if (!audioStream)
+            {
+                spdlog::error("Failed to create audio stream");
+            }
+
+            this->audioStream = audioStream;
+
+            SDL_SetAudioStreamGetCallback(audioStream, &SDLCallback, this);
+            if (audioState == AudioState::Playing)
+            {
+                SDL_BindAudioStream(audioPlayer->GetGroupDeviceId(soundGroupName), audioStream);
+            }
+        }
+
+        void PutSamplesSDL(int bytesRequested)
+        {
+            uint32_t framesRequested = bytesRequested / sizeof(int16_t) / stream->channels;
+
+            if (framesRequested > 0)
+            {
+                std::vector<int16_t> workBuffer(framesRequested * stream->channels, 0);
+                bool didLoop = false;
+                auto frameCount = stream->GetFrames(&workBuffer[0], framesRequested, loop ? &didLoop : nullptr);
+
+                float groupVolume = audioPlayer->GetGroupVolume(soundGroupName);
+                float defaultVolume = audioPlayer->GetGroupVolume("default");
+                float volume = std::min(groupVolume, defaultVolume);
+
+                if (!ApproximatelyEqual(volume, 1.0f))
+                {
+                    std::transform(workBuffer.begin(), workBuffer.end(), workBuffer.begin(),
+                        [volume](int16_t sample) -> int16_t { return (int16_t)(sample * volume); });
+                }
+                SDL_PutAudioStreamData(audioStream, &workBuffer[0], frameCount * stream->channels * sizeof(int16_t));
+            }
         }
     };
 
@@ -317,6 +370,26 @@ namespace Lucky
 
         pImpl->audioInstances[pImpl->nextAudioRef] = si;
         return pImpl->nextAudioRef++;
+    }
+
+    AudioRef AudioPlayer::Play(std::shared_ptr<Stream> stream, const std::string &soundGroupName,
+        const bool beginPaused, const bool loop, AudioCallbackFunction audioCallback)
+    {
+        auto groupIterator = pImpl->soundGroups.find(soundGroupName);
+        if (groupIterator == pImpl->soundGroups.end())
+        {
+            CreateSoundGroup(soundGroupName, pImpl->defaultSoundGroupSettings);
+        }
+
+        SoundGroup &soundGroup = pImpl->soundGroups[soundGroupName];
+
+        StreamInstance *si = new StreamInstance(
+            stream, soundGroupName, loop, audioCallback, beginPaused ? AudioState::Paused : AudioState::Playing, this);
+
+        pImpl->audioInstances[pImpl->nextAudioRef] = si;
+        return pImpl->nextAudioRef++;
+
+        return 0;
     }
 
     void AudioPlayer::Pause(const AudioRef &audioRef)

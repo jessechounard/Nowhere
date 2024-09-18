@@ -162,6 +162,9 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp">
       <Filter>Source\Lucky\Source\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp">
+      <Filter>Source\Lucky\Source\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp">
@@ -273,6 +276,9 @@
       <Filter>Dependencies\stb_vorbis</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp">
+      <Filter>Source\Lucky\Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp">
       <Filter>Source\Lucky\Include\Audio</Filter>
     </ClInclude>
   </ItemGroup>
