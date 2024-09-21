@@ -98,13 +98,17 @@ int main()
     float rotation = 0;
     Lucky::BatchRenderer batchRenderer(graphicsDevice, 1024);
 
-    auto sound = std::make_shared<Lucky::Sound>("test.wav");
-    auto stream = std::make_shared<Lucky::Stream>("test.ogg");
+    auto ouch = std::make_shared<Lucky::Sound>("ouch.wav");
+    auto wav = std::make_shared<Lucky::Sound>("test.wav");
+    auto ogg = std::make_shared<Lucky::Stream>("test.ogg");
+    auto mp3 = std::make_shared<Lucky::Stream>("test.mp3");
 
     std::unique_ptr<Lucky::AudioPlayer> audioPlayer = std::make_unique<Lucky::AudioPlayer>();
 
-    // audioPlayer->Play(sound);
-    audioPlayer->Play(stream, "default", false, true);
+    auto ref1 = audioPlayer->Play(ouch, "default", false);
+    auto ref2 = audioPlayer->Play(wav, "default", true);
+    //auto ref3 = audioPlayer->Play(ogg, "default", false);
+    auto ref4 = audioPlayer->Play(mp3, "default", true);
     // debug code end
 
     bool quit = false;
@@ -118,9 +122,6 @@ int main()
     double fpsTimer = 0;
     int renderCount = 0, updateCount = 0;
     int guiUpdateCount = 0, guiRenderCount = 0;
-
-    previousKeyboardState = currentKeyboardState;
-    previousMouseState = currentMouseState;
 
     while (!quit)
     {
@@ -138,6 +139,9 @@ int main()
         // Update loop
         while (accumulator >= dt && !quit)
         {
+            previousKeyboardState = currentKeyboardState;
+            previousMouseState = currentMouseState;
+
             t += dt;
             accumulator -= dt;
 
@@ -247,7 +251,10 @@ int main()
 
             ImGui::EndFrame();
 
+            audioPlayer->Update();
+             
             // game->Update(static_cast<float>(dt));
+
             updateCount++;
 
             // debug code begin

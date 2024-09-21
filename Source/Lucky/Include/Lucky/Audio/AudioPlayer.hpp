@@ -16,16 +16,12 @@ namespace Lucky
 {
     typedef uint32_t AudioRef;
 
-    enum class AudioEvent
+    enum class AudioState
     {
-        Complete,
-        Looped,
-        Error
+        Playing,
+        Paused,
+        Stopped,
     };
-
-    typedef std::function<void(const AudioRef &, const AudioEvent &)> AudioCallbackFunction;
-
-    struct AudioInstance;
 
     struct SoundGroupSettings
     {
@@ -50,23 +46,23 @@ namespace Lucky
         float GetGroupVolume(const std::string &soundGroupName);
 
         // todo: replace these booleans with enum types
-        AudioRef Play(std::shared_ptr<Sound> sound, const std::string &soundGroupName = "default",
-            const bool beginPaused = false, const bool loop = false, AudioCallbackFunction audioCallback = nullptr);
-        AudioRef Play(std::shared_ptr<Stream> stream, const std::string &soundGroupName = "default",
-            const bool beginPaused = false, const bool loop = false, AudioCallbackFunction audioCallback = nullptr);
+        AudioRef Play(
+            std::shared_ptr<Sound> sound, const std::string &soundGroupName = "default", const bool loop = false);
+        AudioRef Play(
+            std::shared_ptr<Stream> stream, const std::string &soundGroupName = "default", const bool loop = false);
         void Pause(const AudioRef &audioRef);
         void Resume(const AudioRef &audioRef);
         void Stop(const AudioRef &audioRef);
+
+        AudioState GetState(const AudioRef &audioRef);
+
+        void Update();
 
       private:
         AudioPlayer(const AudioPlayer &) = delete;
         AudioPlayer(const AudioPlayer &&) = delete;
         AudioPlayer &operator=(const AudioPlayer &) = delete;
         AudioPlayer &operator=(const AudioPlayer &&) = delete;
-
-        void AudioCallback(AudioInstance *instance, int bytesRequested);
-
-        friend void SDLCallback(void *userData, SDL_AudioStream *stream, int additionalAmount, int totalBytes);
 
         struct Impl;
         std::unique_ptr<Impl> pImpl;

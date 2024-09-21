@@ -17,7 +17,7 @@ namespace Lucky
 
         uint32_t GetFrames(int16_t *buffer, uint32_t frames, bool *loop);
 
-        uint16_t sampleRate;
+        uint32_t sampleRate;
         uint16_t channels;
 
       private:

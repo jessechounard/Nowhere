@@ -161,7 +161,8 @@ namespace Lucky
 
         if (vorbis)
         {
-            auto samples = stb_vorbis_get_samples_short_interleaved(vorbis, channels, buffer, frames * channels);
+            uint32_t samples = static_cast<uint32_t>(
+                stb_vorbis_get_samples_short_interleaved(vorbis, channels, buffer, frames * channels));
             if (loop && samples < frames)
             {
                 *loop = true;
@@ -176,13 +177,14 @@ namespace Lucky
         }
         else
         {
-            auto samples = drmp3_read_pcm_frames_s16(mp3, frames, buffer);
+            uint32_t samples = static_cast<uint32_t>(drmp3_read_pcm_frames_s16(mp3, frames, buffer));
             if (loop && samples < frames)
             {
                 *loop = true;
                 drmp3_seek_to_pcm_frame(mp3, 0);
 
-                return samples + drmp3_read_pcm_frames_s16(mp3, channels, buffer + samples * channels);
+                return samples +
+                       static_cast<uint32_t>(drmp3_read_pcm_frames_s16(mp3, channels, buffer + samples * channels));
             }
             else
             {

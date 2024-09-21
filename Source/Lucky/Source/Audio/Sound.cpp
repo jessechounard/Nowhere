@@ -19,10 +19,10 @@ namespace Lucky
             throw;
         }
 
-        frameCount = static_cast<uint32_t>(drwavSampleCount);
+        totalFrames = static_cast<uint32_t>(drwavSampleCount);
         sampleRate = drwavSampleRate;
         channels = drwavChannels;
-        frames.insert(frames.end(), drwavSamples, drwavSamples + frameCount * channels);
+        frames.insert(frames.end(), drwavSamples, drwavSamples + totalFrames * channels);
 
         drwav_free(drwavSamples, nullptr);
     }
@@ -41,11 +41,32 @@ namespace Lucky
             throw;
         }
 
-        frameCount = static_cast<uint32_t>(drwavSampleCount);
+        totalFrames = static_cast<uint32_t>(drwavSampleCount);
         sampleRate = drwavSampleRate;
         channels = drwavChannels;
-        frames.insert(frames.end(), drwavSamples, drwavSamples + frameCount);
+        frames.insert(frames.end(), drwavSamples, drwavSamples + totalFrames);
 
         drwav_free(drwavSamples, nullptr);
+    }
+
+    uint32_t Sound::GetFrames(uint32_t &position, int16_t *buffer, uint32_t frameCount, bool *loop)
+    {
+        uint32_t framesAvailable = totalFrames - position;
+        uint32_t framesToGet = std::min(frameCount, framesAvailable);
+
+        if (framesToGet > 0)
+        {
+            memcpy(buffer, &frames[position * channels], framesToGet * channels * sizeof(int16_t));
+            position += framesToGet;
+            if (position == totalFrames && loop)
+            {
+                *loop = true;
+                position = 0;
+                return framesToGet +
+                       GetFrames(position, buffer + framesToGet * channels, frameCount - framesToGet, loop);
+            }
+        }
+
+        return framesToGet;
     }
 } // namespace Lucky
