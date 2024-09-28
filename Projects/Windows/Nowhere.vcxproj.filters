@@ -70,6 +70,9 @@
     <Filter Include="Source\Lucky\Source\Audio">
       <UniqueIdentifier>{8fc8a9df-c03e-4664-ae2b-0e0ad4d99ab0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dependencies\stb_truetype">
+      <UniqueIdentifier>{f9520822-82f8-4c8a-8fd2-33960e883762}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Windows\main.cpp">
@@ -164,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp">
       <Filter>Source\Lucky\Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.c">
+      <Filter>Dependencies\stb_truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Font.cpp">
+      <Filter>Source\Lucky\Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp">
       <Filter>Source\Lucky\Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.h">
+      <Filter>Dependencies\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Font.hpp">
+      <Filter>Source\Lucky\Include\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

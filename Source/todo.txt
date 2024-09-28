@@ -1,13 +1,19 @@
 If this isn't working, the debug -> Working Directory needs to be set to $(OutDir)
 and the texture needs to be manually copied there.
 
+- Make Lucky a static library
+- Build tests/demos
+	- Audio
+	- Font rendering
+	- Shaders
+	- Input
+	- Collision
 - ECS / GameObjects?
 - Camera
 - Asset loader
 - Audio
 	- enumerate playback devices
 	- audio capture?
-- Font/Text rendering
 - Particle system
 - Animations
 - Hex grid tiles layout

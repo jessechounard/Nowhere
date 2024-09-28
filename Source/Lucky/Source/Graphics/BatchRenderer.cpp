@@ -45,8 +45,7 @@ namespace Lucky
         "	gl_FragColor = texture2D(TextureSampler, v_texcoord) * v_color;\n"
         "}\n";
 
-    BatchRenderer::BatchRenderer(
-        std::shared_ptr<GraphicsDevice> graphicsDevice, uint32_t maximumTriangles)
+    BatchRenderer::BatchRenderer(std::shared_ptr<GraphicsDevice> graphicsDevice, uint32_t maximumTriangles)
         : graphicsDevice(graphicsDevice)
     {
         assert(maximumTriangles > 0);
@@ -58,8 +57,8 @@ namespace Lucky
             (uint8_t *)defaultVertexShaderSource, (int)strlen(defaultVertexShaderSource));
         defaultFragmentShader = std::make_unique<FragmentShader>(
             (uint8_t *)defaultFragmentShaderSource, (int)strlen(defaultFragmentShaderSource));
-        defaultShaderProgram = std::make_shared<ShaderProgram>(
-            graphicsDevice, *defaultVertexShader, *defaultFragmentShader);
+        defaultShaderProgram =
+            std::make_shared<ShaderProgram>(graphicsDevice, *defaultVertexShader, *defaultFragmentShader);
         vertexBuffer = std::make_unique<VertexBuffer>(VertexBufferType::Dynamic, maximumVertices);
 
         vertices.resize(maximumVertices);
@@ -82,8 +81,7 @@ namespace Lucky
         batchStarted = true;
         this->blendMode = blendMode;
         this->texture = texture;
-        this->currentShaderProgram =
-            (shaderProgram != nullptr) ? shaderProgram : defaultShaderProgram;
+        this->currentShaderProgram = (shaderProgram != nullptr) ? shaderProgram : defaultShaderProgram;
         this->transformMatrix = transformMatrix;
     }
 
@@ -102,9 +100,76 @@ namespace Lucky
         batchStarted = false;
     }
 
-    void BatchRenderer::BatchQuad(Rectangle *sourceRectangle, const glm::vec2 &position,
-        const float rotation, const glm::vec2 &scale, const glm::vec2 &origin, const UVMode uvMode,
-        const Color &color)
+    void BatchRenderer::BatchQuadUV(
+        const glm::vec2 &uv0, const glm::vec2 &uv1, const glm::vec2 &xy0, const glm::vec2 &xy1, const Color &color)
+    {
+        // todo: check batchStarted
+
+        if (activeVertices + 6 > maximumVertices)
+        {
+            Flush();
+        }
+
+        std::pair<float, float> uvs[4];
+        uvs[0].first = uv0.x;
+        uvs[0].second = uv0.y;
+        uvs[1].first = uv1.x;
+        uvs[1].second = uv0.y;
+        uvs[2].first = uv1.x;
+        uvs[2].second = uv1.y;
+        uvs[3].first = uv0.x;
+        uvs[3].second = uv1.y;
+
+        Vertex *vertices = &this->vertices[0] + activeVertices;
+        vertices->x = xy0.x;
+        vertices->y = xy0.y;
+        vertices->u = uvs[0].first;
+        vertices->v = uvs[0].second;
+        vertices->r = color.r;
+        vertices->g = color.g;
+        vertices->b = color.b;
+        vertices->a = color.a;
+        vertices++;
+
+        vertices->x = xy1.x;
+        vertices->y = xy0.y;
+        vertices->u = uvs[1].first;
+        vertices->v = uvs[1].second;
+        vertices->r = color.r;
+        vertices->g = color.g;
+        vertices->b = color.b;
+        vertices->a = color.a;
+        vertices++;
+
+        vertices->x = xy1.x;
+        vertices->y = xy1.y;
+        vertices->u = uvs[2].first;
+        vertices->v = uvs[2].second;
+        vertices->r = color.r;
+        vertices->g = color.g;
+        vertices->b = color.b;
+        vertices->a = color.a;
+        vertices++;
+
+        *vertices = *(vertices - 3);
+        vertices++;
+        *vertices = *(vertices - 2);
+        vertices++;
+
+        vertices->x = xy0.x;
+        vertices->y = xy1.y;
+        vertices->u = uvs[3].first;
+        vertices->v = uvs[3].second;
+        vertices->r = color.r;
+        vertices->g = color.g;
+        vertices->b = color.b;
+        vertices->a = color.a;
+
+        activeVertices += 6;
+    }
+
+    void BatchRenderer::BatchQuad(Rectangle *sourceRectangle, const glm::vec2 &position, const float rotation,
+        const glm::vec2 &scale, const glm::vec2 &origin, const UVMode uvMode, const Color &color)
     {
         // todo: check batchStarted
 
@@ -272,15 +337,13 @@ namespace Lucky
         glm::mat4 projectionMatrix;
         if (graphicsDevice->IsUsingRenderTarget())
         {
-            projectionMatrix =
-                glm::ortho<float>((float)viewport.x, (float)(viewport.x + viewport.width),
-                    (float)viewport.y, (float)(viewport.y + viewport.height));
+            projectionMatrix = glm::ortho<float>((float)viewport.x, (float)(viewport.x + viewport.width),
+                (float)viewport.y, (float)(viewport.y + viewport.height));
         }
         else
         {
-            projectionMatrix =
-                glm::ortho<float>((float)viewport.x, (float)(viewport.x + viewport.width),
-                    (float)(viewport.y + viewport.height), (float)viewport.y);
+            projectionMatrix = glm::ortho<float>((float)viewport.x, (float)(viewport.x + viewport.width),
+                (float)(viewport.y + viewport.height), (float)viewport.y);
         }
         projectionMatrix = projectionMatrix * transformMatrix;
 
@@ -290,8 +353,7 @@ namespace Lucky
         currentShaderProgram->SetParameter("ProjectionMatrix", projectionMatrix);
 
         vertexBuffer->SetVertexData(&vertices[0], activeVertices);
-        graphicsDevice->DrawPrimitives(
-            *vertexBuffer, PrimitiveType::Triangles, 0, activeVertices / 3);
+        graphicsDevice->DrawPrimitives(*vertexBuffer, PrimitiveType::Triangles, 0, activeVertices / 3);
 
         activeVertices = 0;
     }

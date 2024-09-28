@@ -45,7 +45,6 @@ namespace Lucky
         SDL_AudioDeviceID GetGroupDeviceId(const std::string &soundGroupName);
         float GetGroupVolume(const std::string &soundGroupName);
 
-        // todo: replace these booleans with enum types
         AudioRef Play(
             std::shared_ptr<Sound> sound, const std::string &soundGroupName = "default", const bool loop = false);
         AudioRef Play(

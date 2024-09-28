@@ -4,6 +4,9 @@
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 
+#include <stb_rect_pack.h>
+#include <stb_truetype.h>
+
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl3.h>
@@ -12,10 +15,54 @@
 #include <Lucky/Audio/Sound.hpp>
 #include <Lucky/Audio/Stream.hpp>
 #include <Lucky/Graphics/BatchRenderer.hpp>
+#include <Lucky/Graphics/Font.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
 #include <Lucky/Input/Keyboard.hpp>
 #include <Lucky/Input/Mouse.hpp>
+
+std::unique_ptr<Lucky::BatchRenderer> batchRenderer;
+std::shared_ptr<Lucky::Texture> white;
+std::shared_ptr<Lucky::Font> testFont;
+
+void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
+{
+    batchRenderer = std::make_unique<Lucky::BatchRenderer>(graphicsDevice, 1024);
+
+    white = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "white.png");
+
+    testFont = std::make_shared<Lucky::Font>("arial.ttf");
+    int codePoints[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+        't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' '};
+
+    testFont->CreateFontEntry("asdf", 128, codePoints, sizeof(codePoints), 3);
+}
+
+void DebugCodeCleanup()
+{
+    testFont.reset();
+
+    batchRenderer.reset();
+}
+
+void DebugCodeUpdate(double t)
+{
+}
+
+void DebugCodeRender()
+{
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, white);
+    batchRenderer->BatchQuad(nullptr, glm::vec2(0.0f, 540.0f), 0.0f, glm::vec2(1920.0f, 540.0f), glm::vec2(0.0f, 0.0f),
+        Lucky::UVMode::Normal, Lucky::Color::White);
+    batchRenderer->End();
+
+    auto texture = testFont->GetTexture("asdf");
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, texture);
+    testFont->DrawString(*batchRenderer, "abcdefghijklmnopqrstuvwxyz", "asdf", 20, 540);
+    testFont->DrawString(*batchRenderer, "Te VAW", "asdf", 20, 690);
+    batchRenderer->End();
+}
 
 Lucky::KeyboardState previousKeyboardState, currentKeyboardState;
 Lucky::MouseState previousMouseState, currentMouseState;
@@ -93,23 +140,7 @@ int main()
 
     InitializeImGui(window, graphicsDevice->GetGLContext());
 
-    // debug code begin
-    auto texture = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Linear, "temp.png");
-    float rotation = 0;
-    Lucky::BatchRenderer batchRenderer(graphicsDevice, 1024);
-
-    auto ouch = std::make_shared<Lucky::Sound>("ouch.wav");
-    auto wav = std::make_shared<Lucky::Sound>("test.wav");
-    auto ogg = std::make_shared<Lucky::Stream>("test.ogg");
-    auto mp3 = std::make_shared<Lucky::Stream>("test.mp3");
-
-    std::unique_ptr<Lucky::AudioPlayer> audioPlayer = std::make_unique<Lucky::AudioPlayer>();
-
-    auto ref1 = audioPlayer->Play(ouch, "default", false);
-    auto ref2 = audioPlayer->Play(wav, "default", true);
-    //auto ref3 = audioPlayer->Play(ogg, "default", false);
-    auto ref4 = audioPlayer->Play(mp3, "default", true);
-    // debug code end
+    DebugCodeInit(graphicsDevice);
 
     bool quit = false;
 
@@ -251,15 +282,11 @@ int main()
 
             ImGui::EndFrame();
 
-            audioPlayer->Update();
-             
+            // todo: Update code goes here
+            DebugCodeUpdate(dt);
             // game->Update(static_cast<float>(dt));
 
             updateCount++;
-
-            // debug code begin
-            rotation += (float)dt;
-            // debug code end
 
             fpsTimer += dt;
             if (Lucky::ApproximatelyEqual((float)fpsTimer, 1.0f) || fpsTimer > 1.0f)
@@ -278,17 +305,12 @@ int main()
 
             graphicsDevice->ClearScreen(Lucky::Color::CornflowerBlue);
 
+            // todo: render code goes ehre
+            DebugCodeRender();
+
             // game->Render();
+
             renderCount++;
-
-            // debug code begin
-            batchRenderer.Begin(Lucky::BlendMode::Alpha, texture, nullptr);
-
-            batchRenderer.BatchQuad(nullptr, glm::vec2(1920 / 2.0f, 1080 / 2.0f), rotation, glm::vec2(1.0f, 1.0f),
-                glm::vec2(0.5f, 0.5f), Lucky::UVMode::Normal, Lucky::Color::White);
-
-            batchRenderer.End();
-            // debug code end
 
             graphicsDevice->EndFrame();
 
@@ -302,7 +324,7 @@ int main()
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 
-    audioPlayer.reset();
+    DebugCodeCleanup();
 
     graphicsDevice.reset();
     SDL_DestroyWindow(window);

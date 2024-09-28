@@ -13,6 +13,8 @@ namespace Lucky
         return v0 + t * (v1 - v0);
     }
 
+    float InverseLerp(const float &v0, const float &v1, const float &v);
+
     template <typename T>
     int Sign(T val)
     {
@@ -45,4 +47,6 @@ namespace Lucky
 
     bool ApproximatelyEqual(float floatA, float floatB, float tolerance = 0.0001f);
     bool ApproximatelyZero(float f, float tolerance = 0.0001f);
+
+    glm::vec2 WorldToLocal(const glm::vec2 &xy0, const glm::vec2 &xy1, const glm::vec2 &world);
 } // namespace Lucky

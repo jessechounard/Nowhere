@@ -73,32 +73,32 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)..\..\Build\Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\..\Build\Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_truetype;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Source\Dependencies\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\Build\Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\..\Build\Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_truetype;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Source\Dependencies\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)..\..\Build\Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\..\Build\Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_truetype;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Source\Dependencies\SDL\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)..\..\Build\Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\..\Build\Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\Source\Dependencies\dr_mp3;$(ProjectDir)..\..\Source\Dependencies\dr_wav;$(ProjectDir)..\..\Source\Dependencies\glad;$(ProjectDir)..\..\Source\Dependencies\glm;$(ProjectDir)..\..\Source\Dependencies\imgui;$(ProjectDir)..\..\Source\Dependencies\imgui\backends;$(ProjectDir)..\..\Source\Dependencies\rapidjson;$(ProjectDir)..\..\Source\Dependencies\SDL\include;$(ProjectDir)..\..\Source\Dependencies\spdlog;$(ProjectDir)..\..\Source\Dependencies\stb_image;$(ProjectDir)..\..\Source\Dependencies\stb_truetype;$(ProjectDir)..\..\Source\Dependencies\stb_vorbis;$(ProjectDir)..\..\Source\Dependencies\SquirrelNoise;$(ProjectDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\Source\Dependencies\SDL\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,7 +115,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,7 +132,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -150,7 +150,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,6 +176,7 @@
     <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c" />
+    <ClCompile Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.c" />
     <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\DebugDraw.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Font.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\ShaderProgram.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Texture.cpp" />
@@ -210,6 +212,7 @@
     <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="..\..\Source\Dependencies\stb_image\stb_image.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.h" />
     <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp" />
@@ -218,6 +221,7 @@
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\DebugDraw.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Font.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\GraphicsDevice.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\ShaderProgram.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Texture.hpp" />
