@@ -56,6 +56,18 @@ stb_image - image loader
 	Added an implementation file following the header instructions.
 	License: Public Domain / MIT
 
+stb_rect_pack - simple 2D rectangle packer with decent quality
+	Downloaded from github on 9/22/2024, version v1.01
+	https://github.com/nothings/stb/blob/master/stb_rect_pack.h
+	Added an implementation file following the header instructions.
+	License: Public Domain / MIT
+
+stb_truetype - parse, decode, and rasterize characters from truetype fonts
+	Downloaded from github on 9/22/2024, version v1.26
+	https://github.com/nothings/stb/blob/master/stb_truetype.h
+	Added an implementation file following the header instructions.
+	License: Public Domain / MIT
+
 stb_vorbis - Ogg Vorbis audio decoder
 	Downloaded from github on 3/4/2024, version 1.22
 	https://github.com/nothings/stb/blob/master/stb_vorbis.c

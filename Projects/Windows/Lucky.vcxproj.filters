@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{ad321564-20dd-4269-991e-35a61fdd6ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{5637eb00-0782-469f-8c77-3cc7f1d5b6d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4baebba5-db05-4c12-ab28-65ee71588a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Audio">
+      <UniqueIdentifier>{ea7d823a-9ff7-40bf-b5aa-4a0fa3365ac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Graphics">
+      <UniqueIdentifier>{c7344f10-4dd7-4f9a-bab5-b393874761eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Input">
+      <UniqueIdentifier>{4ac0501c-4426-4fbd-9334-861dd70e3f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Math">
+      <UniqueIdentifier>{a518b072-6c9f-4037-9706-9865ea74f4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Utility">
+      <UniqueIdentifier>{7e5a55f2-e990-4654-ab47-5993e23ab159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Audio">
+      <UniqueIdentifier>{ef8c7fc3-7b69-4b18-acd4-3375b4c4db82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{13ce9996-dbc2-46ae-9384-9441b1e02bd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{092ff0b6-d9a5-457f-a1b7-f3b966bf8913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{bed58fcd-a16d-4da6-a48c-59184b08114d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{7bbfcfb9-9621-4de8-9c26-da74ad47ef16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\dr_mp3">
+      <UniqueIdentifier>{e60c8216-ace0-41da-9c0f-8589e853b71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\dr_wav">
+      <UniqueIdentifier>{defbd39c-38e7-4ff1-8bb7-6db2e9ec91c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\glad">
+      <UniqueIdentifier>{b30a43bf-0424-4ea6-ae20-fa1861248dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\stb_image">
+      <UniqueIdentifier>{640bd08d-0516-459d-a324-0163d66896b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\stb_truetype">
+      <UniqueIdentifier>{325b0c11-45bf-42da-9dca-2aee47d6b4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\stb_vorbis">
+      <UniqueIdentifier>{6fd5f871-4635-4e11-a92b-55b9d499217b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp">
+      <Filter>Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp">
+      <Filter>Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp">
+      <Filter>Include\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\GraphicsDevice.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\ShaderProgram.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Texture.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\TextureAtlas.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\VertexBuffer.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\DebugDraw.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Font.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Mouse.hpp">
+      <Filter>Include\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Keyboard.hpp">
+      <Filter>Include\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Random.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Rectangle.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Vertex.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Collision.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathConstants.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathHelpers.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\Platform.h">
+      <Filter>Include\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\StateMachine.hpp">
+      <Filter>Include\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\FileSystem.hpp">
+      <Filter>Include\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Source\Graphics\IncludeOpenGL.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.h">
+      <Filter>Dependencies\dr_mp3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\dr_wav\dr_wav.h">
+      <Filter>Dependencies\dr_wav</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\glad\glad\gl.h">
+      <Filter>Dependencies\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_image\stb_image.h">
+      <Filter>Dependencies\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.h">
+      <Filter>Dependencies\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_rect_pack.h">
+      <Filter>Dependencies\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h">
+      <Filter>Dependencies\stb_vorbis</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\DebugDraw.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Font.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\GraphicsDevice.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\ShaderProgram.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Texture.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\TextureAtlas.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\VertexBuffer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\MathConstants.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\MathHelpers.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\Collision.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Utility\FileSystem.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.c">
+      <Filter>Dependencies\dr_mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\dr_wav\dr_wav.c">
+      <Filter>Dependencies\dr_wav</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\glad\glad\gl.cpp">
+      <Filter>Dependencies\glad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c">
+      <Filter>Dependencies\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.c">
+      <Filter>Dependencies\stb_truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c">
+      <Filter>Dependencies\stb_vorbis</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Source\Dependencies\Licenses.txt">
+      <Filter>Dependencies</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Source\.clang-format" />
+  </ItemGroup>
+</Project>

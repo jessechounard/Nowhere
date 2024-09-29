@@ -18,35 +18,103 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.h" />
+    <ClInclude Include="..\..\Source\Dependencies\dr_wav\dr_wav.h" />
+    <ClInclude Include="..\..\Source\Dependencies\glad\glad\gl.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_image\stb_image.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_rect_pack.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.h" />
+    <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\AudioPlayer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\DebugDraw.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Font.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\GraphicsDevice.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\ShaderProgram.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Texture.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\TextureAtlas.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Keyboard.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Mouse.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Collision.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathConstants.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\MathHelpers.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Random.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Rectangle.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Vertex.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\FileSystem.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\Platform.h" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Utility\StateMachine.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Source\Graphics\IncludeOpenGL.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Dependencies\dr_mp3\dr_mp3.c" />
+    <ClCompile Include="..\..\Source\Dependencies\dr_wav\dr_wav.c" />
+    <ClCompile Include="..\..\Source\Dependencies\glad\glad\gl.cpp" />
+    <ClCompile Include="..\..\Source\Dependencies\stb_image\stb_image.c" />
+    <ClCompile Include="..\..\Source\Dependencies\stb_truetype\stb_truetype.c" />
+    <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\AudioPlayer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\DebugDraw.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Font.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\ShaderProgram.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\Collision.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\MathConstants.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Math\MathHelpers.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Utility\FileSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Source\Dependencies\Licenses.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Source\.clang-format" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9dc91be1-9aa1-4150-8e23-7fe5a4f3ef7c}</ProjectGuid>
-    <RootNamespace>Nowhere</RootNamespace>
+    <ProjectGuid>{8f79e77d-465d-4298-b71c-104e419fb1ae}</ProjectGuid>
+    <RootNamespace>Lucky</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -74,40 +142,40 @@
     <OutDir>$(SolutionDir)..\..\Build\Output\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\..\Build\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\..\Source\Dependencies\dr_mp3;$(SolutionDir)..\..\Source\Dependencies\dr_wav;$(SolutionDir)..\..\Source\Dependencies\glad;$(SolutionDir)..\..\Source\Dependencies\glm;$(SolutionDir)..\..\Source\Dependencies\imgui;$(SolutionDir)..\..\Source\Dependencies\imgui\backends;$(SolutionDir)..\..\Source\Dependencies\rapidjson;$(SolutionDir)..\..\Source\Dependencies\SDL\include;$(SolutionDir)..\..\Source\Dependencies\spdlog;$(SolutionDir)..\..\Source\Dependencies\stb_image;$(SolutionDir)..\..\Source\Dependencies\stb_truetype;$(SolutionDir)..\..\Source\Dependencies\stb_vorbis;$(SolutionDir)..\..\Source\Dependencies\SquirrelNoise;$(SolutionDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x86;$(SolutionDir)..\..\Build\Output\Lucky\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\..\Build\Output\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\..\Build\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\..\Source\Dependencies\dr_mp3;$(SolutionDir)..\..\Source\Dependencies\dr_wav;$(SolutionDir)..\..\Source\Dependencies\glad;$(SolutionDir)..\..\Source\Dependencies\glm;$(SolutionDir)..\..\Source\Dependencies\imgui;$(SolutionDir)..\..\Source\Dependencies\imgui\backends;$(SolutionDir)..\..\Source\Dependencies\rapidjson;$(SolutionDir)..\..\Source\Dependencies\SDL\include;$(SolutionDir)..\..\Source\Dependencies\spdlog;$(SolutionDir)..\..\Source\Dependencies\stb_image;$(SolutionDir)..\..\Source\Dependencies\stb_truetype;$(SolutionDir)..\..\Source\Dependencies\stb_vorbis;$(SolutionDir)..\..\Source\Dependencies\SquirrelNoise;$(SolutionDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x86;$(SolutionDir)..\..\Build\Output\Lucky\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\..\Build\Output\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\..\Build\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\..\Source\Dependencies\dr_mp3;$(SolutionDir)..\..\Source\Dependencies\dr_wav;$(SolutionDir)..\..\Source\Dependencies\glad;$(SolutionDir)..\..\Source\Dependencies\glm;$(SolutionDir)..\..\Source\Dependencies\imgui;$(SolutionDir)..\..\Source\Dependencies\imgui\backends;$(SolutionDir)..\..\Source\Dependencies\rapidjson;$(SolutionDir)..\..\Source\Dependencies\SDL\include;$(SolutionDir)..\..\Source\Dependencies\spdlog;$(SolutionDir)..\..\Source\Dependencies\stb_image;$(SolutionDir)..\..\Source\Dependencies\stb_truetype;$(SolutionDir)..\..\Source\Dependencies\stb_vorbis;$(SolutionDir)..\..\Source\Dependencies\SquirrelNoise;$(SolutionDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x64;$(SolutionDir)..\..\Build\Output\Lucky\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\..\Build\Output\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\..\Build\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\..\Source\Dependencies\dr_mp3;$(SolutionDir)..\..\Source\Dependencies\dr_wav;$(SolutionDir)..\..\Source\Dependencies\glad;$(SolutionDir)..\..\Source\Dependencies\glm;$(SolutionDir)..\..\Source\Dependencies\imgui;$(SolutionDir)..\..\Source\Dependencies\imgui\backends;$(SolutionDir)..\..\Source\Dependencies\rapidjson;$(SolutionDir)..\..\Source\Dependencies\SDL\include;$(SolutionDir)..\..\Source\Dependencies\spdlog;$(SolutionDir)..\..\Source\Dependencies\stb_image;$(SolutionDir)..\..\Source\Dependencies\stb_truetype;$(SolutionDir)..\..\Source\Dependencies\stb_vorbis;$(SolutionDir)..\..\Source\Dependencies\SquirrelNoise;$(SolutionDir)..\..\Source\Lucky\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x64;$(SolutionDir)..\..\Build\Output\Lucky\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\Source\Dependencies\SDL\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Lucky.lib;SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /d /i /y $(ProjectDir)..\..\Source\Dependencies\SDL\lib\x86\SDL3.dll $(OutDir)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -115,33 +183,33 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Lucky.lib;SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /d /i /y $(ProjectDir)..\..\Source\Dependencies\SDL\lib\x86\SDL3.dll $(OutDir)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Lucky.lib;SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /d /i /y $(ProjectDir)..\..\Source\Dependencies\SDL\lib\x64\SDL3.dll $(OutDir)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -149,45 +217,19 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Lucky.lib;SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /d /i /y $(ProjectDir)..\..\Source\Dependencies\SDL\lib\x64\SDL3.dll $(OutDir)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_sdl3.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\..\Source\Dependencies\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\..\Source\Windows\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\backends\imgui_impl_sdl3.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imconfig.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imgui.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imgui_internal.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\..\Source\Dependencies\imgui\imstb_truetype.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\Source\todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Source\.clang-format" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
