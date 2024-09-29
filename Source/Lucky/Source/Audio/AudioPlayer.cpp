@@ -65,8 +65,8 @@ namespace Lucky
 
     struct SoundInstance : public AudioInstance
     {
-        SoundInstance(AudioPlayer &player, std::shared_ptr<Sound> sound, bool shouldLoop, AudioState state, AudioRef ref,
-            const std::string &group)
+        SoundInstance(AudioPlayer &player, std::shared_ptr<Sound> sound, bool shouldLoop, AudioState state,
+            AudioRef ref, const std::string &group)
             : AudioInstance(player, shouldLoop, state, ref, group, sound->channels, sound->sampleRate),
               sound(sound),
               position(0)
@@ -224,6 +224,23 @@ namespace Lucky
 
         float queueTime;
     };
+
+    std::vector<AudioDevice> AudioPlayer::GetAudioOutputDevices()
+    {
+        int count;
+        SDL_AudioDeviceID *deviceIds = SDL_GetAudioOutputDevices(&count);
+        std::vector<AudioDevice> audioDevices;
+
+        for (int i = 0; i < count; i++)
+        {
+            char *name = SDL_GetAudioDeviceName(deviceIds[i]);
+            audioDevices.push_back(AudioDevice{name, deviceIds[i]});
+            SDL_free(name);
+        }
+
+        SDL_free(deviceIds);
+        return audioDevices;
+    }
 
     AudioPlayer::AudioPlayer(SoundGroupSettings defaultSoundGroupSettings)
         : pImpl(std::make_unique<Impl>())
@@ -456,9 +473,8 @@ namespace Lucky
             }
         }
 
-        pImpl->instances.erase(
-            std::remove_if(pImpl->instances.begin(), pImpl->instances.end(),
-                [](std::unique_ptr<AudioInstance> &ai) { return ai->state == AudioState::Stopped; }),
+        pImpl->instances.erase(std::remove_if(pImpl->instances.begin(), pImpl->instances.end(),
+                                   [](std::unique_ptr<AudioInstance> &ai) { return ai->state == AudioState::Stopped; }),
             pImpl->instances.end());
     }
 } // namespace Lucky

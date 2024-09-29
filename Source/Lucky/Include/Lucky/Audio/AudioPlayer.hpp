@@ -29,9 +29,18 @@ namespace Lucky
         float volume = 1.0f;
     };
 
+    struct AudioDevice
+    {
+        std::string name;
+        SDL_AudioDeviceID deviceId;
+    };
+
     class AudioPlayer
     {
       public:
+
+        static std::vector<AudioDevice> GetAudioOutputDevices();
+
         AudioPlayer(SoundGroupSettings defaultSoundGroupSettings = SoundGroupSettings());
         ~AudioPlayer();
 

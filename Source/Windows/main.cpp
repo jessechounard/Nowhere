@@ -27,6 +27,13 @@ std::shared_ptr<Lucky::Font> testFont;
 
 void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
 {
+    auto devices = Lucky::AudioPlayer::GetAudioOutputDevices();
+
+    for (const auto &device : devices)
+    {
+        printf("%s, %d\n", device.name.c_str(), device.deviceId);
+    }
+
     batchRenderer = std::make_unique<Lucky::BatchRenderer>(graphicsDevice, 1024);
 
     white = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "white.png");

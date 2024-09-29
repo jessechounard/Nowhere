@@ -11,7 +11,6 @@ and any assets used in your test needs to be manually copied there.
 - Camera
 - Asset loader
 - Audio
-	- enumerate playback devices
 	- audio capture?
 - Particle system
 - Animations
