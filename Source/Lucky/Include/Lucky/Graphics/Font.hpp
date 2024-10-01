@@ -24,7 +24,7 @@ namespace Lucky
         // todo: future optimization - allow packing multiple sizes into one texture
         // todo: do we need to specify a maximum texture size?
         std::shared_ptr<Texture> CreateFontEntry(
-            const std::string &entryName, const float fontSize, int *codePoints, int pointCount, uint32_t oversampling);
+            const std::string &entryName, const float fontSize, int *codePoints, int pointCount, uint32_t oversampling = 1, bool kerningEnabled = true);
         std::shared_ptr<Texture> GetTexture(const std::string &entryName);
 
         void DrawString(BatchRenderer &batchRenderer, const std::string &text, const std::string &entryName,

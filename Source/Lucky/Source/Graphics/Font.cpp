@@ -53,7 +53,7 @@ namespace Lucky
     }
 
     std::shared_ptr<Texture> Font::CreateFontEntry(
-        const std::string &name, const float fontSize, int *codePoints, int pointCount, uint32_t oversampling)
+        const std::string &name, const float fontSize, int *codePoints, int pointCount, uint32_t oversampling, bool kerningEnabled)
     {
         FontEntry entry;
         entry.codePoints.insert(entry.codePoints.end(), codePoints, codePoints + pointCount);
@@ -118,14 +118,17 @@ namespace Lucky
 
         entry.scaleFactor = stbtt_ScaleForPixelHeight(&fontInfo, fontSize);
 
-        for (int first = 0; first < pointCount; first++)
+        if (kerningEnabled)
         {
-            for (int second = 0; second < pointCount; second++)
+            for (int first = 0; first < pointCount; first++)
             {
-                int kern = stbtt_GetCodepointKernAdvance(&fontInfo, codePoints[first], codePoints[second]);
-                if (kern != 0)
+                for (int second = 0; second < pointCount; second++)
                 {
-                    entry.kerning[std::pair<int, int>(codePoints[first], codePoints[second])] = kern;
+                    int kern = stbtt_GetCodepointKernAdvance(&fontInfo, codePoints[first], codePoints[second]);
+                    if (kern != 0)
+                    {
+                        entry.kerning[std::pair<int, int>(codePoints[first], codePoints[second])] = kern;
+                    }
                 }
             }
         }
