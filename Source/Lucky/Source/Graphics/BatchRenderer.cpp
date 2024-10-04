@@ -349,10 +349,20 @@ namespace Lucky
 
         graphicsDevice->SetBlendMode(blendMode);
         graphicsDevice->ApplyShaderProgram(*currentShaderProgram);
-        currentShaderProgram->SetParameter("TextureSampler", *texture, 0);
-        currentShaderProgram->SetParameter("ProjectionMatrix", projectionMatrix);
 
-        vertexBuffer->SetVertexData(&vertices[0], activeVertices);
+        auto textureSamplerLocation = currentShaderProgram->GetParameterLocation("TextureSampler");
+        if (textureSamplerLocation != -1)
+        {
+            currentShaderProgram->SetParameter("TextureSampler", *texture, 0);
+        }
+
+        auto projectionMatrixLocation = currentShaderProgram->GetParameterLocation("ProjectionMatrix");
+        if (projectionMatrixLocation != -1)
+        {
+            currentShaderProgram->SetParameter("ProjectionMatrix", projectionMatrix);
+        }
+
+        vertexBuffer->SetVertexData(*currentShaderProgram, &vertices[0], activeVertices);
         graphicsDevice->DrawPrimitives(*vertexBuffer, PrimitiveType::Triangles, 0, activeVertices / 3);
 
         activeVertices = 0;

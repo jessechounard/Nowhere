@@ -1,6 +1,9 @@
 If this isn't working, the debug -> Working Directory needs to be set to $(OutDir)
 and any assets used in your test needs to be manually copied there.
 
+- Textures
+	- Make memory type configurable. (For HDR.)
+
 - Build tests/demos
 	- Audio
 	- Font rendering

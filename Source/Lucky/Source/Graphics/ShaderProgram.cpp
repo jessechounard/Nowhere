@@ -11,10 +11,6 @@
 
 namespace Lucky
 {
-    const int ShaderAttributeLocation::Position;
-    const int ShaderAttributeLocation::Color;
-    const int ShaderAttributeLocation::TexCoord;
-
     VertexShader::VertexShader(const uint8_t *source, uint32_t sourceLength)
     {
         assert(source != nullptr);
@@ -26,7 +22,7 @@ namespace Lucky
             throw;
         }
 
-        glShaderSource(id, 1, (GLchar**)&source, (GLint*)&sourceLength);
+        glShaderSource(id, 1, (GLchar **)&source, (GLint *)&sourceLength);
         glCompileShader(id);
 
         int status;
@@ -38,7 +34,7 @@ namespace Lucky
             glGetShaderInfoLog(id, 1024, &logLength, infoLog);
             glDeleteShader(id);
 
-            spdlog::error("Vertex shader compilation failed\n");
+            spdlog::error("Vertex shader compilation failed:\n{}", infoLog);
             throw;
         }
     }
@@ -59,7 +55,7 @@ namespace Lucky
             throw;
         }
 
-        glShaderSource(id, 1, (GLchar **)&source, (GLint*)&sourceLength);
+        glShaderSource(id, 1, (GLchar **)&source, (GLint *)&sourceLength);
         glCompileShader(id);
 
         int status;
@@ -71,7 +67,7 @@ namespace Lucky
             glGetShaderInfoLog(id, 1024, &logLength, infoLog);
             glDeleteShader(id);
 
-            spdlog::error("Fragment shader compilation failed");
+            spdlog::error("Fragment shader compilation failed:\n{}", infoLog);
             throw;
         }
     }
@@ -81,7 +77,8 @@ namespace Lucky
         glDeleteShader(id);
     }
 
-    ShaderProgram::ShaderProgram(std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader, FragmentShader &fragmentShader)
+    ShaderProgram::ShaderProgram(
+        std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader, FragmentShader &fragmentShader)
         : graphicsDevice(graphicsDevice)
     {
         assert(graphicsDevice);
@@ -95,10 +92,6 @@ namespace Lucky
 
         glAttachShader(id, vertexShader.GetShaderId());
         glAttachShader(id, fragmentShader.GetShaderId());
-
-        glBindAttribLocation(id, ShaderAttributeLocation::Position, "position");
-        glBindAttribLocation(id, ShaderAttributeLocation::Color, "color");
-        glBindAttribLocation(id, ShaderAttributeLocation::TexCoord, "texcoord");
 
         glLinkProgram(id);
 
@@ -125,20 +118,7 @@ namespace Lucky
             GLchar name[256];
 
             glGetActiveUniform(id, i, 256, nullptr, &size, &type, name);
-            parameters[name] = { glGetUniformLocation(id, name), type };
-        }
-
-        if (parameters.find("TextureSampler") == parameters.end() ||
-            parameters["TextureSampler"].type != GL_SAMPLER_2D)
-        {
-            spdlog::error("Shader program missing required parameter: {}", "TextureSampler");
-            throw;
-        }
-        if (parameters.find("ProjectionMatrix") == parameters.end() ||
-            parameters["ProjectionMatrix"].type != GL_FLOAT_MAT4)
-        {
-            spdlog::error("Shader program missing required parameter: {}", "ProjectionMatrix");
-            throw;
+            parameters[name] = {glGetUniformLocation(id, name), type};
         }
 
         int attributeCount;
@@ -151,29 +131,31 @@ namespace Lucky
             GLchar name[256];
 
             glGetActiveAttrib(id, i, 256, nullptr, &size, &type, name);
-            attributes[name] = { glGetAttribLocation(id, name), type };
+            attributes[name] = {glGetAttribLocation(id, name), type};
         }
 
-        if (attributes.find("position") == attributes.end() ||
-            attributes["position"].location != ShaderAttributeLocation::Position ||
-            attributes["position"].type != GL_FLOAT_VEC4)
+        auto positionType = GetAttributeType("position");
+        if (positionType != 0 && positionType != GL_FLOAT_VEC4)
         {
-            spdlog::error("Shader program missing required attribute: {}", "position");
-            throw;
+            spdlog::error("Shader program has an invalid type for attribute: position\n");
         }
-        if (attributes.find("color") == attributes.end() ||
-            attributes["color"].location != ShaderAttributeLocation::Color ||
-            attributes["color"].type != GL_FLOAT_VEC4)
+
+        auto colorType = GetAttributeType("color");
+        if (colorType != 0 && colorType != GL_FLOAT_VEC4)
         {
-            spdlog::error("Shader program missing required attribute: {}", "color");
-            throw;
+            spdlog::error("Shader program has an invalid type for attribute: color\n");
         }
-        if (attributes.find("texcoord") == attributes.end() ||
-            attributes["texcoord"].location != ShaderAttributeLocation::TexCoord ||
-            attributes["texcoord"].type != GL_FLOAT_VEC2)
+
+        auto texcoordType = GetAttributeType("texcoord");
+        if (texcoordType != 0 && texcoordType != GL_FLOAT_VEC2)
         {
-            spdlog::error("Shader program missing required attribute: {}", "texcoord");
-            throw;
+            spdlog::error("Shader program has an invalid type for attribute: texcoord\n");
+        }
+
+        auto projectionMatrixType = GetParameterType("ProjectionMatrix");
+        if (projectionMatrixType != 0 && projectionMatrixType != GL_FLOAT_MAT4)
+        {
+            spdlog::error("Shader program has an invalid type for uniform: ProjectionMatrix\n");
         }
     }
 
@@ -224,53 +206,21 @@ namespace Lucky
 
     int32_t ShaderProgram::GetParameterLocation(const std::string &name)
     {
-        assert(name.length() > 0);
-
-        if (parameters.find(name) == parameters.end())
-        {
-            spdlog::error("Shader program parameter not found: {}", name);
-            throw;
-        }
-
-        return parameters[name].location;
+        return (parameters.find(name) == parameters.end()) ? -1 : parameters[name].location;
     }
 
     uint32_t ShaderProgram::GetParameterType(const std::string &name)
     {
-        assert(name.length() > 0);
-
-        if (parameters.find(name) == parameters.end())
-        {
-            spdlog::error("Shader program parameter not found: {}", name);
-            throw;
-        }
-
-        return parameters[name].type;
+        return (parameters.find(name) == parameters.end()) ? 0 : parameters[name].type;
     }
 
     int32_t ShaderProgram::GetAttributeLocation(const std::string &name)
     {
-        assert(name.length() > 0);
-
-        if (attributes.find(name) == attributes.end())
-        {
-            spdlog::error("Shader program attribute not found: {}", name);
-            throw;
-        }
-
-        return attributes[name].type;
+        return (attributes.find(name) == attributes.end()) ? -1 : attributes[name].location;
     }
 
     uint32_t ShaderProgram::GetAttributeType(const std::string &name)
     {
-        assert(name.length() > 0);
-
-        if (attributes.find(name) == attributes.end())
-        {
-            spdlog::error("Shader program attribute not found: {}", name);
-            throw;
-        }
-
-        return attributes[name].type;
+        return (attributes.find(name) == attributes.end()) ? 0 : attributes[name].type;
     }
-}
+} // namespace Lucky

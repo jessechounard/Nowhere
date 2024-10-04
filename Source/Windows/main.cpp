@@ -25,6 +25,39 @@ std::unique_ptr<Lucky::BatchRenderer> batchRenderer;
 std::shared_ptr<Lucky::Texture> white;
 std::shared_ptr<Lucky::Font> testFont;
 
+    constexpr char defaultVertexShaderSource[] =
+    // input from CPU
+    "attribute vec4 position;\n"
+    "attribute vec4 color;\n"
+    "attribute vec2 texcoord;\n"
+    // output to fragment shader
+    "varying vec4 v_color;\n"
+    "varying vec2 v_texcoord;\n"
+    // custom input from program
+    "uniform mat4 ProjectionMatrix;\n"
+    //
+    "void main()\n"
+    "{\n"
+    "	gl_Position = ProjectionMatrix * position;\n"
+    "	v_color = color;\n"
+    "	v_texcoord = texcoord;\n"
+    "}\n";
+
+constexpr char defaultFragmentShaderSource[] =
+    // input from vertex shader
+    "varying vec4 v_color;\n"
+    "varying vec2 v_texcoord;\n"
+    // custom input from program
+    //"uniform sampler2D TextureSampler;\n"
+    //
+    "void main()\n"
+    "{\n"
+    "	gl_FragColor = vec4(v_texcoord, 0.0, 1.0);"
+    "}\n";
+
+std::shared_ptr<Lucky::ShaderProgram> shaderProgram;
+std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice;
+
 void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
 {
     auto devices = Lucky::AudioPlayer::GetAudioOutputDevices();
@@ -44,6 +77,10 @@ void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
         'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' '};
 
     testFont->CreateFontEntry("asdf", 64, codePoints, sizeof(codePoints), 3, false);
+
+    Lucky::VertexShader vertexShader((uint8_t *)defaultVertexShaderSource, (int)strlen(defaultVertexShaderSource));
+    Lucky::FragmentShader fragmentShader((uint8_t *)defaultFragmentShaderSource, (int)strlen(defaultFragmentShaderSource));
+    shaderProgram = std::make_shared<Lucky::ShaderProgram>(graphicsDevice, vertexShader, fragmentShader);
 }
 
 void DebugCodeCleanup()
@@ -59,7 +96,7 @@ void DebugCodeUpdate(double t)
 
 void DebugCodeRender()
 {
-    batchRenderer->Begin(Lucky::BlendMode::Alpha, white);
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, white, shaderProgram);
     batchRenderer->BatchQuad(nullptr, glm::vec2(0.0f, 540.0f), 0.0f, glm::vec2(1920.0f, 540.0f), glm::vec2(0.0f, 0.0f),
         Lucky::UVMode::Normal, Lucky::Color::White);
     batchRenderer->End();
@@ -142,7 +179,7 @@ int main()
         SDL_Log("Window could not be created\n\t%s\n", SDL_GetError());
     }
 
-    auto graphicsDevice = std::make_shared<Lucky::GraphicsDevice>(
+    graphicsDevice = std::make_shared<Lucky::GraphicsDevice>(
         Lucky::GraphicsAPI::OpenGL, window, Lucky::VerticalSyncType::AdaptiveEnabled);
 
     InitializeImGui(window, graphicsDevice->GetGLContext());

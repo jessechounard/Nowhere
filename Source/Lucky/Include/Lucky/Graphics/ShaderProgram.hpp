@@ -9,12 +9,17 @@
 
 namespace Lucky
 {
-    struct ShaderAttributeLocation
-    {
-        static const int Position = 0;
-        static const int Color = 1;
-        static const int TexCoord = 2;
-    };
+    // Shaders can have almost any input parameters, but there are a few that
+    // we have predefined names for with BatchRenderer
+    // 
+    // These three are passed in the vertex data (one per vertex)
+    // position: vec4
+    // color: vec4
+    // texcoord: vec2
+    //
+    // These are passed with the draw call (one for all vertices)
+    // ProjectionMatrix: mat4
+    // TextureSampler: sampler2D (in slot 0)
 
     struct GraphicsDevice;
     struct Texture;

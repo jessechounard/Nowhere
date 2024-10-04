@@ -10,6 +10,7 @@ namespace Lucky
         Dynamic,
     };
 
+    struct ShaderProgram;
     struct Vertex;
 
     struct VertexBuffer
@@ -21,7 +22,7 @@ namespace Lucky
 
         VertexBuffer &operator=(const VertexBuffer &) = delete;
 
-        void SetVertexData(Vertex *vertices, uint32_t vertexCount);
+        void SetVertexData(ShaderProgram &shaderProgram, Vertex *vertices, uint32_t vertexCount);
 
         uint32_t GetArrayId() const
         {
