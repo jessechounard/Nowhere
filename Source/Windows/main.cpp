@@ -23,9 +23,12 @@
 
 std::unique_ptr<Lucky::BatchRenderer> batchRenderer;
 std::shared_ptr<Lucky::Texture> white;
+std::shared_ptr<Lucky::Texture> mask;
+std::shared_ptr<Lucky::Texture> test;
 std::shared_ptr<Lucky::Font> testFont;
+float time = 0;
 
-    constexpr char defaultVertexShaderSource[] =
+constexpr char defaultVertexShaderSource[] =
     // input from CPU
     "attribute vec4 position;\n"
     "attribute vec4 color;\n"
@@ -44,15 +47,52 @@ std::shared_ptr<Lucky::Font> testFont;
     "}\n";
 
 constexpr char defaultFragmentShaderSource[] =
+    // test shader
+    "vec3 palette(float t)\n"
+    "{\n"
+    "    vec3 a = vec3(0.5, 0.5, 0.5);\n"
+    "    vec3 b = vec3(0.5, 0.5, 0.5);\n"
+    "    vec3 c = vec3(1.0, 1.0, 1.0);\n"
+    "    vec3 d = vec3(0.263, 0.416, 0.557);\n"
+    //
+    "    return a + b * cos(6.28318 * (c * t + d));\n"
+    "}\n"
+
     // input from vertex shader
     "varying vec4 v_color;\n"
     "varying vec2 v_texcoord;\n"
     // custom input from program
-    //"uniform sampler2D TextureSampler;\n"
+    "uniform sampler2D TextureSampler;\n"
+    "uniform sampler2D MaskSampler;\n"
+    "uniform vec2 Resolution;\n"
+    "uniform float Time;\n"
     //
     "void main()\n"
     "{\n"
-    "	gl_FragColor = vec4(v_texcoord, 0.0, 1.0);"
+    //"   vec2 uv = (v_texcoord * 2.0 - Resolution.xy) / Resolution.y;\n"
+    "   vec2 uv = v_texcoord * 2 - 1;\n"
+    "   uv.x *= Resolution.x / Resolution.y;\n"
+    "   vec2 uv0 = uv;\n"
+    "   vec3 finalColor = vec3(0.0);\n"
+    //
+    "   for (float i = 0.0; i < 4.0; i++)\n"
+    "   {\n"
+    "       uv = fract(uv * 1.5) - 0.5;\n"
+    //
+    "       float d = length(uv) * exp(-length(uv0));\n"
+    //
+    "       vec3 col = palette(length(uv0) + i * .4 + Time * .4);\n"
+    //
+    "       d = sin(d * 8. + Time) / 8.;\n"
+    "       d = abs(d);\n"
+    //
+    "       d = pow(0.01 / d, 1.2);\n"
+    //
+    "       finalColor += col * d;\n"
+    "   }\n"
+    //
+    "   gl_FragColor = vec4(finalColor, 1.0);\n"
+    //"   gl_FragColor = vec4(v_texcoord.xy, sin(Time) / 2 + 0.5, 1.0);\n"
     "}\n";
 
 std::shared_ptr<Lucky::ShaderProgram> shaderProgram;
@@ -70,16 +110,19 @@ void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
     batchRenderer = std::make_unique<Lucky::BatchRenderer>(graphicsDevice, 1024);
 
     white = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "white.png");
+    mask = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "mask.png");
+    test = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "test.png");
 
     testFont = std::make_shared<Lucky::Font>("C:/windows/fonts/arial.ttf");
     int codePoints[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
         'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' '};
 
-    testFont->CreateFontEntry("asdf", 64, codePoints, sizeof(codePoints), 3, false);
+    testFont->CreateFontEntry("asdf", 64, codePoints, sizeof(codePoints), 1, true);
 
     Lucky::VertexShader vertexShader((uint8_t *)defaultVertexShaderSource, (int)strlen(defaultVertexShaderSource));
-    Lucky::FragmentShader fragmentShader((uint8_t *)defaultFragmentShaderSource, (int)strlen(defaultFragmentShaderSource));
+    Lucky::FragmentShader fragmentShader(
+        (uint8_t *)defaultFragmentShaderSource, (int)strlen(defaultFragmentShaderSource));
     shaderProgram = std::make_shared<Lucky::ShaderProgram>(graphicsDevice, vertexShader, fragmentShader);
 }
 
@@ -92,19 +135,31 @@ void DebugCodeCleanup()
 
 void DebugCodeUpdate(double t)
 {
+    time += (float)t;
 }
 
 void DebugCodeRender()
 {
-    batchRenderer->Begin(Lucky::BlendMode::Alpha, white, shaderProgram);
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, white);
     batchRenderer->BatchQuad(nullptr, glm::vec2(0.0f, 540.0f), 0.0f, glm::vec2(1920.0f, 540.0f), glm::vec2(0.0f, 0.0f),
         Lucky::UVMode::Normal, Lucky::Color::White);
     batchRenderer->End();
 
     auto texture = testFont->GetTexture("asdf");
     batchRenderer->Begin(Lucky::BlendMode::Alpha, texture);
-    testFont->DrawString(*batchRenderer, "abcdefghijklmnopqrstuvwxyz", "asdf", 20, 540);
-    testFont->DrawString(*batchRenderer, "Te VAW", "asdf", 20, 690);
+    testFont->DrawString(*batchRenderer, "abcdefghijklmnopqrstuvwxyz", "asdf", 20, 540, Lucky::Color::Black);
+    testFont->DrawString(*batchRenderer, "Te VAW", "asdf", 20, 690, Lucky::Color::Black);
+    batchRenderer->End();
+
+    shaderProgram->SetParameter("Time", time);
+    shaderProgram->SetParameter("Resolution", 1920.0f, 1080.0f);
+
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, test, shaderProgram, glm::mat4(1.0f));
+    // batchRenderer->BatchQuad(nullptr, glm::vec2(1920.0f / 2.0f, 540.0f), 0.0f, glm::vec2(1.0f, 1.0f), glm::vec2(0.5f,
+    // 0.5f),
+    //     Lucky::UVMode::Normal, Lucky::Color::White);
+    batchRenderer->BatchQuadUV(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 0.0f),
+        glm::vec2(1920.0f, 1080.0f), Lucky::Color::White);
     batchRenderer->End();
 }
 

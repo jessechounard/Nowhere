@@ -60,15 +60,14 @@ namespace Lucky
         }
 
         void Begin(BlendMode blendMode, std::shared_ptr<Texture> texture,
-            std::shared_ptr<ShaderProgram> shaderProgram = nullptr,
-            const glm::mat4 &transformMatrix = glm::mat4(1.0f));
+            std::shared_ptr<ShaderProgram> shaderProgram = nullptr, const glm::mat4 &transformMatrix = glm::mat4(1.0f));
         void End();
 
-        void BatchQuadUV(const glm::vec2 &uv0, const glm::vec2 &uv1, const glm::vec2 &xy0, const glm::vec2 &xy1, const Color &color);
+        void BatchQuadUV(
+            const glm::vec2 &uv0, const glm::vec2 &uv1, const glm::vec2 &xy0, const glm::vec2 &xy1, const Color &color);
 
         void BatchQuad(Rectangle *sourceRectangle, const glm::vec2 &position, const float rotation,
-            const glm::vec2 &scale, const glm::vec2 &origin, const UVMode uvMode,
-            const Color &color);
+            const glm::vec2 &scale, const glm::vec2 &origin, const UVMode uvMode, const Color &color);
 
         void BatchTriangles(Vertex *triangleVertices, const int triangleCount);
 

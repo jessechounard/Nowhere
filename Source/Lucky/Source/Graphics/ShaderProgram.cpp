@@ -11,6 +11,45 @@
 
 namespace Lucky
 {
+    enum class ShaderParameterType
+    {
+        Texture = GL_SAMPLER_2D,
+        Matrix = GL_FLOAT_MAT4,
+        Float = GL_FLOAT,
+        Float2 = GL_FLOAT_VEC2,
+        Float3 = GL_FLOAT_VEC3,
+        Float4 = GL_FLOAT_VEC4,
+        Int = GL_INT,
+        Int2 = GL_INT_VEC2,
+        Int3 = GL_INT_VEC3,
+        Int4 = GL_INT_VEC4,
+    };
+
+    struct ShaderParameterValue
+    {
+        ShaderParameterType parameterType;
+
+        union {
+            struct
+            {
+                uint32_t textureId;
+                int32_t slot;
+            };
+            struct
+            {
+                float matrix[16];
+            };
+            struct
+            {
+                float f0, f1, f2, f3;
+            };
+            struct
+            {
+                int32_t i0, i1, i2, i3;
+            };
+        };
+    };
+
     VertexShader::VertexShader(const uint8_t *source, uint32_t sourceLength)
     {
         assert(source != nullptr);
@@ -104,7 +143,7 @@ namespace Lucky
             glGetShaderInfoLog(id, 1024, &logLength, infoLog);
             glDeleteProgram(id);
 
-            spdlog::error("Shader program linking failed");
+            spdlog::error("Shader program linking failed:\n{}", infoLog);
             throw;
         }
 
@@ -166,42 +205,178 @@ namespace Lucky
 
     void ShaderProgram::SetParameter(const std::string &name, const Texture &texture, int slotNumber)
     {
-        assert(name.length() > 0);
-
-        if (parameters.find(name) == parameters.end())
-        {
-            spdlog::error("Shader program parameter not found: {}", name);
-            throw;
-        }
-
-        if (parameters[name].type != GL_SAMPLER_2D)
-        {
-            spdlog::error("Shader program parameter type mismatch: {}", name);
-            throw;
-        }
-
-        glActiveTexture(GL_TEXTURE0 + slotNumber);
-        graphicsDevice->BindTexture(texture);
-        glUniform1i(parameters[name].location, slotNumber);
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Texture;
+        spv.textureId = texture.GetTextureId();
+        spv.slot = slotNumber;
+        parameterValues[name] = spv;
     }
 
     void ShaderProgram::SetParameter(const std::string &name, const glm::mat4 &matrix)
     {
-        assert(name.length() > 0);
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Matrix;
+        memcpy(spv.matrix, &matrix[0][0], sizeof(float) * 16);
+        parameterValues[name] = spv;
+    }
 
-        if (parameters.find(name) == parameters.end())
+    void ShaderProgram::SetParameter(const std::string &name, const float value)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float;
+        spv.f0 = value;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const float value0, const float value1)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float2;
+        spv.f0 = value0;
+        spv.f1 = value1;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(
+        const std::string &name, const float value0, const float value1, const float value2)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float3;
+        spv.f0 = value0;
+        spv.f1 = value1;
+        spv.f2 = value2;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(
+        const std::string &name, const float value0, const float value1, const float value2, const float value3)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float4;
+        spv.f0 = value0;
+        spv.f1 = value1;
+        spv.f2 = value2;
+        spv.f3 = value3;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const int value)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Int;
+        spv.i0 = value;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const int value0, const int value1)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Int2;
+        spv.i0 = value0;
+        spv.i1 = value1;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const int value0, const int value1, const int value2)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Int3;
+        spv.i0 = value0;
+        spv.i1 = value1;
+        spv.i2 = value2;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(
+        const std::string &name, const int value0, const int value1, const int value2, const int value3)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Int4;
+        spv.i0 = value0;
+        spv.i1 = value1;
+        spv.i2 = value2;
+        spv.i3 = value3;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::ClearParameter(const std::string &name)
+    {
+        const auto findResult = parameterValues.find(name);
+        if (findResult != parameterValues.end())
         {
-            spdlog::error("Shader program parameter not found: {}", name);
-            throw;
+            parameters.erase(name);
         }
+    }
 
-        if (parameters[name].type != GL_FLOAT_MAT4)
+    void ShaderProgram::ApplyParameters()
+    {
+        for (const auto &kvp : parameterValues)
         {
-            spdlog::error("Shader program parameter type mismatch: {}", name);
-            throw;
-        }
+            auto &name = kvp.first;
+            auto &parameterValue = kvp.second;
 
-        glUniformMatrix4fv(parameters[name].location, 1, GL_FALSE, &matrix[0][0]);
+            auto findResult = parameters.find(name);
+
+            if (findResult == parameters.end())
+            {
+                continue;
+            }
+
+            ShaderParameter &parameter = findResult->second;
+
+            if (parameter.type != (uint32_t)parameterValue.parameterType)
+            {
+                spdlog::error("Shader program parameter type mismatch: {}", name);
+                throw;
+            }
+
+            switch (parameterValue.parameterType)
+            {
+            case ShaderParameterType::Texture:
+                glActiveTexture(GL_TEXTURE0 + parameterValue.slot);
+                glBindTexture(GL_TEXTURE_2D, parameterValue.textureId);
+                glUniform1i(parameter.location, parameterValue.slot);
+                break;
+
+            case ShaderParameterType::Matrix:
+                glUniformMatrix4fv(parameter.location, 1, GL_FALSE, parameterValue.matrix);
+                break;
+
+            case ShaderParameterType::Float:
+                glUniform1f(parameter.location, parameterValue.f0);
+                break;
+
+            case ShaderParameterType::Float2:
+                glUniform2f(parameter.location, parameterValue.f0, parameterValue.f1);
+                break;
+
+            case ShaderParameterType::Float3:
+                glUniform3f(parameter.location, parameterValue.f0, parameterValue.f1, parameterValue.f2);
+                break;
+
+            case ShaderParameterType::Float4:
+                glUniform4f(
+                    parameter.location, parameterValue.f0, parameterValue.f1, parameterValue.f2, parameterValue.f3);
+                break;
+
+            case ShaderParameterType::Int:
+                glUniform1i(parameter.location, parameterValue.i0);
+                break;
+
+            case ShaderParameterType::Int2:
+                glUniform2i(parameter.location, parameterValue.i0, parameterValue.i1);
+                break;
+
+            case ShaderParameterType::Int3:
+                glUniform3i(parameter.location, parameterValue.i0, parameterValue.i1, parameterValue.i2);
+                break;
+
+            case ShaderParameterType::Int4:
+                glUniform4i(
+                    parameter.location, parameterValue.i0, parameterValue.i1, parameterValue.i2, parameterValue.i3);
+                break;
+            }
+        }
     }
 
     int32_t ShaderProgram::GetParameterLocation(const std::string &name)

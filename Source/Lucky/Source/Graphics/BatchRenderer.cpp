@@ -362,6 +362,8 @@ namespace Lucky
             currentShaderProgram->SetParameter("ProjectionMatrix", projectionMatrix);
         }
 
+        currentShaderProgram->ApplyParameters();
+
         vertexBuffer->SetVertexData(*currentShaderProgram, &vertices[0], activeVertices);
         graphicsDevice->DrawPrimitives(*vertexBuffer, PrimitiveType::Triangles, 0, activeVertices / 3);
 

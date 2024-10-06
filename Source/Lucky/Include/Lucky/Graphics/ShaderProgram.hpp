@@ -11,7 +11,7 @@ namespace Lucky
 {
     // Shaders can have almost any input parameters, but there are a few that
     // we have predefined names for with BatchRenderer
-    // 
+    //
     // These three are passed in the vertex data (one per vertex)
     // position: vec4
     // color: vec4
@@ -60,20 +60,36 @@ namespace Lucky
         uint32_t id;
     };
 
+    struct ShaderParameterValue;
+
     struct ShaderProgram
     {
       public:
-        ShaderProgram(std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader,
-            FragmentShader &fragmentShader);
+        ShaderProgram(
+            std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader, FragmentShader &fragmentShader);
         ShaderProgram(const ShaderProgram &) = delete;
         ~ShaderProgram();
 
         ShaderProgram &operator=(const ShaderProgram &) = delete;
 
-        // todo: store the parameter values, so we can query them
         void SetParameter(const std::string &name, const Texture &texture, int slotNumber);
         void SetParameter(const std::string &name, const glm::mat4 &matrix);
-        // todo: other parameter types
+        void SetParameter(const std::string &name, const float value);
+        void SetParameter(const std::string &name, const float value0, const float value1);
+        void SetParameter(const std::string &name, const float value0, const float value1, const float value2);
+        void SetParameter(
+            const std::string &name, const float value0, const float value1, const float value2, const float value3);
+        void SetParameter(const std::string &name, const int value);
+        void SetParameter(const std::string &name, const int value0, const int value1);
+        void SetParameter(const std::string &name, const int value0, const int value1, const int value2);
+        void SetParameter(
+            const std::string &name, const int value0, const int value1, const int value2, const int value3);
+        //  matrices?
+        //  samplers 1d, 3d, cube? arrays?
+
+        // Clear the local copy of a parameter, this will not change the opengl shader
+        void ClearParameter(const std::string &name);
+        void ApplyParameters();
 
         uint32_t GetShaderId() const
         {
@@ -100,8 +116,9 @@ namespace Lucky
         };
 
         std::shared_ptr<GraphicsDevice> graphicsDevice;
-        std::map<std::string, ShaderParameter> parameters;
         std::map<std::string, ShaderAttribute> attributes;
+        std::map<std::string, ShaderParameter> parameters;
+        std::map<std::string, ShaderParameterValue> parameterValues;
         uint32_t id;
     };
 } // namespace Lucky
