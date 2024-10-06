@@ -10,6 +10,7 @@
 #include <stb_truetype.h>
 
 #include <Lucky/Graphics/BatchRenderer.hpp>
+#include <Lucky/Graphics/Color.hpp>
 #include <Lucky/Graphics/Texture.hpp>
 
 namespace Lucky
@@ -28,7 +29,7 @@ namespace Lucky
         std::shared_ptr<Texture> GetTexture(const std::string &entryName);
 
         void DrawString(BatchRenderer &batchRenderer, const std::string &text, const std::string &entryName,
-            const float x, const float y);
+            const float x, const float y, Color color);
 
       private:
         void Initialize();

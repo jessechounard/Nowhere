@@ -52,8 +52,8 @@ namespace Lucky
         }
     }
 
-    std::shared_ptr<Texture> Font::CreateFontEntry(
-        const std::string &name, const float fontSize, int *codePoints, int pointCount, uint32_t oversampling, bool kerningEnabled)
+    std::shared_ptr<Texture> Font::CreateFontEntry(const std::string &name, const float fontSize, int *codePoints,
+        int pointCount, uint32_t oversampling, bool kerningEnabled)
     {
         FontEntry entry;
         entry.codePoints.insert(entry.codePoints.end(), codePoints, codePoints + pointCount);
@@ -145,7 +145,7 @@ namespace Lucky
     }
 
     void Font::DrawString(BatchRenderer &batchRenderer, const std::string &text, const std::string &entryName,
-        const float x, const float y)
+        const float x, const float y, Color color)
     {
         auto &entry = fontEntries[entryName];
 
@@ -174,8 +174,7 @@ namespace Lucky
             if (text[ch] != ' ')
             {
                 batchRenderer.BatchQuadUV(glm::vec2(cd.x0 * iw, cd.y0 * ih), glm::vec2(cd.x1 * iw, cd.y1 * ih),
-                    glm::vec2(xpos + cd.xoff, y + cd.yoff), glm::vec2(xpos + cd.xoff2, y + cd.yoff2),
-                    Lucky::Color::Black);
+                    glm::vec2(xpos + cd.xoff, y + cd.yoff), glm::vec2(xpos + cd.xoff2, y + cd.yoff2), color);
             }
 
             xpos += cd.xadvance;
