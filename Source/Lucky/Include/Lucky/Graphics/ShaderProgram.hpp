@@ -27,9 +27,12 @@ namespace Lucky
     struct VertexShader
     {
       public:
-        VertexShader(const uint8_t *source, uint32_t sourceLength);
+        VertexShader(const std::string &fileName);
+        VertexShader(const void *source, uint32_t sourceLength);
         VertexShader(const VertexShader &) = delete;
         ~VertexShader();
+
+        void Initialize(const void *source, uint32_t sourceLength);
 
         VertexShader &operator=(const VertexShader &) = delete;
 
@@ -45,9 +48,12 @@ namespace Lucky
     struct FragmentShader
     {
       public:
-        FragmentShader(const uint8_t *source, uint32_t sourceLength);
+        FragmentShader(const std::string &fileName);
+        FragmentShader(const void *source, uint32_t sourceLength);
         FragmentShader(const FragmentShader &) = delete;
         ~FragmentShader();
+
+        void Initialize(const void *source, uint32_t sourceLength);
 
         FragmentShader &operator=(const FragmentShader &) = delete;
 

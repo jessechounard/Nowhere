@@ -13,4 +13,6 @@ namespace Lucky
     std::string GetFileExtension(const std::string &fileName);
 
     std::string CombinePaths(const std::string &firstPath, const std::string &secondPath);
+
+    std::string ReadFile(const std::string &fileName);
 } // namespace Lucky

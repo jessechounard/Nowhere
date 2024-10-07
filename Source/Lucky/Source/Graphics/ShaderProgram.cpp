@@ -6,6 +6,7 @@
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/ShaderProgram.hpp>
 #include <Lucky/Graphics/Texture.hpp>
+#include <Lucky/Utility/FileSystem.hpp>
 
 #include "IncludeOpenGL.h"
 
@@ -50,7 +51,29 @@ namespace Lucky
         };
     };
 
-    VertexShader::VertexShader(const uint8_t *source, uint32_t sourceLength)
+    VertexShader::VertexShader(const std::string &fileName)
+    {
+        std::string vertexShaderString = ReadFile(fileName);
+        if (vertexShaderString.empty())
+        {
+            spdlog::error("Failed to read vertex shader file: {}", fileName);
+            throw;
+        }
+
+        Initialize(vertexShaderString.c_str(), (uint32_t)vertexShaderString.length());
+    }
+
+    VertexShader::VertexShader(const void *source, uint32_t sourceLength)
+    {
+        Initialize(source, sourceLength);
+    }
+
+    VertexShader::~VertexShader()
+    {
+        glDeleteShader(id);
+    }
+
+    void VertexShader::Initialize(const void *source, uint32_t sourceLength)
     {
         assert(source != nullptr);
 
@@ -78,12 +101,29 @@ namespace Lucky
         }
     }
 
-    VertexShader::~VertexShader()
+    FragmentShader::FragmentShader(const std::string &fileName)
+    {
+        std::string fragmentShaderString = ReadFile(fileName);
+        if (fragmentShaderString.empty())
+        {
+            spdlog::error("Failed to read fragment shader file: {}", fileName);
+            throw;
+        }
+
+        Initialize(fragmentShaderString.c_str(), (uint32_t)fragmentShaderString.length());
+    }
+
+    FragmentShader::FragmentShader(const void *source, uint32_t sourceLength)
+    {
+        Initialize(source, sourceLength);
+    }
+
+    FragmentShader::~FragmentShader()
     {
         glDeleteShader(id);
     }
 
-    FragmentShader::FragmentShader(const uint8_t *source, uint32_t sourceLength)
+    void FragmentShader::Initialize(const void *source, uint32_t sourceLength)
     {
         assert(source != nullptr);
 
@@ -109,11 +149,6 @@ namespace Lucky
             spdlog::error("Fragment shader compilation failed:\n{}", infoLog);
             throw;
         }
-    }
-
-    FragmentShader::~FragmentShader()
-    {
-        glDeleteShader(id);
     }
 
     ShaderProgram::ShaderProgram(

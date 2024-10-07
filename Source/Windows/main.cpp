@@ -98,6 +98,8 @@ constexpr char defaultFragmentShaderSource[] =
 std::shared_ptr<Lucky::ShaderProgram> shaderProgram;
 std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice;
 
+std::shared_ptr<Lucky::ShaderProgram> defaultShaderProgram;
+
 void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
 {
     auto devices = Lucky::AudioPlayer::GetAudioOutputDevices();
@@ -124,6 +126,11 @@ void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
     Lucky::FragmentShader fragmentShader(
         (uint8_t *)defaultFragmentShaderSource, (int)strlen(defaultFragmentShaderSource));
     shaderProgram = std::make_shared<Lucky::ShaderProgram>(graphicsDevice, vertexShader, fragmentShader);
+
+    Lucky::VertexShader defaultVertexShader("BatchRenderer.vert");
+    Lucky::FragmentShader defaultFragmentShader("BatchRenderer.frag");
+    defaultShaderProgram =
+        std::make_shared<Lucky::ShaderProgram>(graphicsDevice, defaultVertexShader, defaultFragmentShader);
 }
 
 void DebugCodeCleanup()
@@ -160,6 +167,11 @@ void DebugCodeRender()
     //     Lucky::UVMode::Normal, Lucky::Color::White);
     batchRenderer->BatchQuadUV(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 0.0f),
         glm::vec2(1920.0f, 1080.0f), Lucky::Color::White);
+    batchRenderer->End();
+
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, test, defaultShaderProgram);
+    batchRenderer->BatchQuad(nullptr, glm::vec2(960.0f, 540.0f), 0.0f, glm::vec2(1.0f, 1.0f), glm::vec2(0.5f, 0.5f),
+        Lucky::UVMode::Normal, Lucky::Color::White);
     batchRenderer->End();
 }
 

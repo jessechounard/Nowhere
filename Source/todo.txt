@@ -4,7 +4,6 @@ and any assets used in your test needs to be manually copied there.
 - Textures
 	- Make memory type configurable. (For HDR.)
 - Shaders
-	- Load shaders from files
 	- Investigate newer OpenGL, apparently some of this is deprectated
 - Font
 	Printing white on white shows a black halo, investigate

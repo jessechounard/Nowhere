@@ -16,6 +16,9 @@
     <Filter Include="Dependencies\imgui\backends">
       <UniqueIdentifier>{8269c124-1ed9-4f08-a994-2e048dba8d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Shaders">
+      <UniqueIdentifier>{2b8b975f-eeb3-4e1e-a6a8-764c449c66f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Windows\main.cpp">
@@ -74,5 +77,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Source\.clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\Source\Shaders\BatchRenderer.frag">
+      <Filter>Source\Shaders</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\Source\Shaders\BatchRenderer.vert">
+      <Filter>Source\Shaders</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
