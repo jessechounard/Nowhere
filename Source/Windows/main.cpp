@@ -111,9 +111,9 @@ void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
 
     batchRenderer = std::make_unique<Lucky::BatchRenderer>(graphicsDevice, 1024);
 
-    white = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "white.png");
-    mask = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "mask.png");
-    test = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Point, "test.png");
+    white = std::make_shared<Lucky::Texture>("white.png", Lucky::TextureFilter::Point);
+    mask = std::make_shared<Lucky::Texture>("mask.png", Lucky::TextureFilter::Linear);
+    test = std::make_shared<Lucky::Texture>("test.png", Lucky::TextureFilter::Linear, Lucky::TextureFormat::RGBA16);
 
     testFont = std::make_shared<Lucky::Font>("C:/windows/fonts/arial.ttf");
     int codePoints[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',

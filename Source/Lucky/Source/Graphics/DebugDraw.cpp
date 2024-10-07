@@ -13,8 +13,7 @@ namespace Lucky
     {
         batchRenderer = std::make_unique<BatchRenderer>(graphicsDevice, 1000);
         uint8_t pixels[] = {0xff, 0xff, 0xff, 0xff};
-        texture =
-            std::make_shared<Texture>(TextureFilter::Point, TextureType::Default, 1, 1, pixels, 4);
+        texture = std::make_shared<Texture>(TextureType::Default, 1, 1, pixels, 4, TextureFilter::Point, TextureFormat::RGBA);
         beginCalled = false;
     }
 

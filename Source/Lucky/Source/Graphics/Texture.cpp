@@ -11,7 +11,7 @@
 
 namespace Lucky
 {
-    Texture::Texture(TextureFilter textureFilter, const std::string &filename)
+    Texture::Texture(const std::string &filename, TextureFilter textureFilter, TextureFormat textureFormat)
     {
         int imageWidth, imageHeight, imageChannels;
         uint8_t *imagePixels =
@@ -22,12 +22,12 @@ namespace Lucky
             throw;
         }
 
-        Initialize(textureFilter, TextureType::Default, imageWidth, imageHeight, imagePixels,
-            imageWidth * imageHeight * 4);
+        Initialize(TextureType::Default, imageWidth, imageHeight, imagePixels,
+            imageWidth * imageHeight * 4, textureFilter, textureFormat);
         stbi_image_free(imagePixels);
     }
 
-    Texture::Texture(TextureFilter textureFilter, uint8_t *memory, uint32_t memoryLength)
+    Texture::Texture(uint8_t *memory, uint32_t memoryLength, TextureFilter textureFilter, TextureFormat textureFormat)
     {
         assert(memory != nullptr);
 
@@ -40,13 +40,13 @@ namespace Lucky
             throw;
         }
 
-        Initialize(textureFilter, TextureType::Default, imageWidth, imageHeight, imagePixels,
-            imageWidth * imageHeight * 4);
+        Initialize(TextureType::Default, imageWidth, imageHeight, imagePixels, imageWidth * imageHeight * 4,
+            textureFilter, textureFormat);
         stbi_image_free(imagePixels);
     }
 
-    Texture::Texture(TextureFilter textureFilter, TextureType textureType, uint32_t width,
-        uint32_t height, uint8_t *pixelData, uint32_t dataLength)
+    Texture::Texture(TextureType textureType, uint32_t width, uint32_t height, uint8_t *pixelData, uint32_t dataLength,
+        TextureFilter textureFilter, TextureFormat textureFormat)
     {
         assert(width > 0);
         assert(height > 0);
@@ -55,11 +55,11 @@ namespace Lucky
             assert(dataLength >= width * height * 4);
         }
 
-        Initialize(textureFilter, textureType, width, height, pixelData, dataLength);
+        Initialize(textureType, width, height, pixelData, dataLength, textureFilter, textureFormat);
     }
 
-    void Texture::Initialize(TextureFilter textureFilter, TextureType textureType, uint32_t width,
-        uint32_t height, uint8_t *pixelData, uint32_t dataLength)
+    void Texture::Initialize(TextureType textureType, uint32_t width, uint32_t height, uint8_t *pixelData,
+        uint32_t dataLength, TextureFilter textureFilter, TextureFormat textureFormat)
     {
         this->width = width;
         this->height = height;
@@ -71,8 +71,10 @@ namespace Lucky
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+        GLint internalFormat = textureFormat == TextureFormat::RGBA ? GL_RGBA : GL_RGBA16;
+
         glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+            GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
 
         if (textureType == TextureType::RenderTarget)
         {

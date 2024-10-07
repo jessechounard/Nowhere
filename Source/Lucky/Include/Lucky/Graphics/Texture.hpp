@@ -17,22 +17,29 @@ namespace Lucky
         RenderTarget
     };
 
+    enum class TextureFormat
+    {
+        RGBA,   // default
+        RGBA16, // 16 bits per color channel
+    };
+
     struct GraphicsDevice;
 
     struct Texture
     {
       public:
-        Texture(TextureFilter textureFilter, const std::string &filename);
-        Texture(TextureFilter textureFilter, uint8_t *memory, uint32_t memoryLength);
-        Texture(TextureFilter textureFilter, TextureType textureType, uint32_t width,
-            uint32_t height, uint8_t *pixelData, uint32_t dataLength);
+        Texture(const std::string &filename, TextureFilter textureFilter = TextureFilter::Linear,
+            TextureFormat textureFormat = TextureFormat::RGBA);
+        Texture(uint8_t *memory, uint32_t memoryLength, TextureFilter textureFilter = TextureFilter::Linear,
+            TextureFormat textureFormat = TextureFormat::RGBA);
+        Texture(TextureType textureType, uint32_t width, uint32_t height, uint8_t *pixelData, uint32_t dataLength,
+            TextureFilter textureFilter = TextureFilter::Linear, TextureFormat textureFormat = TextureFormat::RGBA);
         Texture(const Texture &) = delete;
         ~Texture();
 
         Texture &operator=(const Texture &) = delete;
 
-        void SetTextureData(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint8_t *pixelData,
-            uint32_t dataLength);
+        void SetTextureData(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint8_t *pixelData, uint32_t dataLength);
 
         TextureFilter GetTextureFilter() const
         {
@@ -67,8 +74,8 @@ namespace Lucky
         }
 
       private:
-        void Initialize(TextureFilter textureFilter, TextureType textureType, uint32_t width,
-            uint32_t height, uint8_t *pixelData, uint32_t dataLength);
+        void Initialize(TextureType textureType, uint32_t width, uint32_t height, uint8_t *pixelData,
+            uint32_t dataLength, TextureFilter textureFilter, TextureFormat textureFormat);
 
         TextureFilter textureFilter = TextureFilter::Linear;
         TextureType textureType = TextureType::Default;

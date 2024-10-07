@@ -113,8 +113,8 @@ namespace Lucky
             s++;
         }
 
-        entry.texture = std::make_shared<Lucky::Texture>(Lucky::TextureFilter::Linear, Lucky::TextureType::Default,
-            bitmapWidth, bitmapHeight, &colorBitmapData[0], (uint32_t)colorBitmapData.size());
+        entry.texture = std::make_shared<Lucky::Texture>(Lucky::TextureType::Default, bitmapWidth, bitmapHeight,
+            &colorBitmapData[0], (uint32_t)colorBitmapData.size(), Lucky::TextureFilter::Linear, Lucky::TextureFormat::RGBA);
 
         entry.scaleFactor = stbtt_ScaleForPixelHeight(&fontInfo, fontSize);
 
