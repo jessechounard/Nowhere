@@ -30,6 +30,7 @@
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Sound.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Audio\Stream.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BatchRenderer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BloomEffect.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Camera.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Color.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\DebugDraw.hpp" />
@@ -64,6 +65,7 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Stream.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BatchRenderer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BloomEffect.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Color.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\DebugDraw.cpp" />

@@ -159,6 +159,9 @@
     <ClInclude Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.h">
       <Filter>Dependencies\stb_vorbis</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BloomEffect.hpp">
+      <Filter>Include\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp">
@@ -235,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Dependencies\stb_vorbis\stb_vorbis.c">
       <Filter>Dependencies\stb_vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BloomEffect.cpp">
+      <Filter>Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

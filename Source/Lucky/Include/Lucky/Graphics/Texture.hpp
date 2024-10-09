@@ -19,8 +19,8 @@ namespace Lucky
 
     enum class TextureFormat
     {
-        RGBA,   // default
-        RGBA16, // 16 bits per color channel
+        Normal,
+        HDR,
     };
 
     struct GraphicsDevice;
@@ -29,11 +29,11 @@ namespace Lucky
     {
       public:
         Texture(const std::string &filename, TextureFilter textureFilter = TextureFilter::Linear,
-            TextureFormat textureFormat = TextureFormat::RGBA);
+            TextureFormat textureFormat = TextureFormat::Normal);
         Texture(uint8_t *memory, uint32_t memoryLength, TextureFilter textureFilter = TextureFilter::Linear,
-            TextureFormat textureFormat = TextureFormat::RGBA);
+            TextureFormat textureFormat = TextureFormat::Normal);
         Texture(TextureType textureType, uint32_t width, uint32_t height, uint8_t *pixelData, uint32_t dataLength,
-            TextureFilter textureFilter = TextureFilter::Linear, TextureFormat textureFormat = TextureFormat::RGBA);
+            TextureFilter textureFilter = TextureFilter::Linear, TextureFormat textureFormat = TextureFormat::Normal);
         Texture(const Texture &) = delete;
         ~Texture();
 
