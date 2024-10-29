@@ -227,6 +227,5 @@ namespace Lucky
         bool keys[MaxKeyboardKeys];
     };
 
-    const KeyboardState &GetPreviousKeyboardState();
-    const KeyboardState &GetCurrentKeyboardState();
+    const KeyboardState &GetKeyboardState();
 } // namespace Lucky

@@ -31,9 +31,6 @@
     <Filter Include="Source\Graphics">
       <UniqueIdentifier>{13ce9996-dbc2-46ae-9384-9441b1e02bd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Input">
-      <UniqueIdentifier>{092ff0b6-d9a5-457f-a1b7-f3b966bf8913}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Math">
       <UniqueIdentifier>{bed58fcd-a16d-4da6-a48c-59184b08114d}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="Dependencies\stb_vorbis">
       <UniqueIdentifier>{6fd5f871-4635-4e11-a92b-55b9d499217b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{3e1477bc-c5d4-4a19-873a-91077a252b1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +162,9 @@
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\BloomEffect.hpp">
       <Filter>Include\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Gamepad.hpp">
+      <Filter>Include\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Lucky\Source\Audio\Sound.cpp">
@@ -203,12 +206,6 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\VertexBuffer.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Lucky\Source\Math\MathConstants.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
@@ -241,6 +238,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\BloomEffect.cpp">
       <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Gamepad.cpp">
+      <Filter>Source\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

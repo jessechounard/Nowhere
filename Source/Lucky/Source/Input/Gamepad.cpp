@@ -1,29 +1,25 @@
+#include <SDL3/SDL_joystick.h>
+
 #include <Lucky/Input/Gamepad.hpp>
 
-bool FindGamepadButtonPressed_impl(int &index, int gamepadButton);
-bool FindGamepadButtonReleased_impl(int &index, int gamepadButton);
-const Lucky::GamepadState &GetPreviousGamepadState_impl(int index);
-const Lucky::GamepadState &GetCurrentGamepadState_impl(int index);
+bool GetGamepadEvent_impl(Lucky::GamepadEvent *event);
+SDL_Gamepad *GetGamepadFromJoystickId_impl(SDL_JoystickID joystickId);
+bool GetGamepadState_impl(SDL_JoystickID joystickId, Lucky::GamepadState *gamepadState);
 
 namespace Lucky
 {
-	bool FindGamepadButtonPressed(int &index, int gamepadButton)
-	{
-		return FindGamepadButtonPressed_impl(index, gamepadButton);
-	}
+    bool GetGamepadEvent(GamepadEvent *event)
+    {
+        return false;
+    }
 
-	bool FindGamepadButtonReleased(int &index, int gamepadButton)
-	{
-		return FindGamepadButtonReleased_impl(index, gamepadButton);
-	}
+    SDL_Gamepad *GetGamepadFromJoystickId(SDL_JoystickID joystickId)
+    {
+        return nullptr;
+    }
 
-	const GamepadState &GetPreviousGamepadState(int index)
-	{
-		return GetPreviousGamepadState_impl(index);
-	}
-
-	const GamepadState &GetCurrentGamepadState(int index)
-	{
-		return GetCurrentGamepadState_impl(index);
-	}
-}
+    bool GetGamepadState(SDL_JoystickID joystickId, GamepadState *gamepadState)
+    {
+        return GetGamepadState_impl(joystickId, gamepadState);
+    }
+} // namespace Lucky

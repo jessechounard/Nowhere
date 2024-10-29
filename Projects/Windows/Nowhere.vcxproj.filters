@@ -85,5 +85,8 @@
     <CopyFileToFolders Include="..\..\Source\Shaders\BatchRenderer.vert">
       <Filter>Source\Shaders</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\Source\Shaders\Circle.frag">
+      <Filter>Source\Shaders</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

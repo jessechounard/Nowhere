@@ -172,6 +172,7 @@ namespace Lucky
         const glm::vec2 &scale, const glm::vec2 &origin, const UVMode uvMode, const Color &color)
     {
         // todo: check batchStarted
+        // todo: check for null texture
 
         if (activeVertices + 6 > maximumVertices)
         {
@@ -351,7 +352,7 @@ namespace Lucky
         graphicsDevice->ApplyShaderProgram(*currentShaderProgram);
 
         auto textureSamplerLocation = currentShaderProgram->GetParameterLocation("TextureSampler");
-        if (textureSamplerLocation != -1)
+        if (textureSamplerLocation != -1 && texture)
         {
             currentShaderProgram->SetParameter("TextureSampler", *texture, 0);
         }

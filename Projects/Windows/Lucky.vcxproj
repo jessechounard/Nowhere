@@ -41,6 +41,7 @@
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\TextureAtlas.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\Types.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Gamepad.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Keyboard.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Input\Mouse.hpp" />
     <ClInclude Include="..\..\Source\Lucky\Include\Lucky\Math\Collision.hpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\Texture.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\TextureAtlas.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\Source\Lucky\Source\Input\Gamepad.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Input\Keyboard.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Input\Mouse.cpp" />
     <ClCompile Include="..\..\Source\Lucky\Source\Math\Collision.cpp" />

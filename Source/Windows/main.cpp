@@ -1,8 +1,12 @@
+#include <deque>
+#include <map>
+
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_gamepad.h>
 
 #include <stb_rect_pack.h>
 #include <stb_truetype.h>
@@ -19,35 +23,34 @@
 #include <Lucky/Graphics/Font.hpp>
 #include <Lucky/Graphics/GraphicsDevice.hpp>
 #include <Lucky/Graphics/Texture.hpp>
+#include <Lucky/Input/Gamepad.hpp>
 #include <Lucky/Input/Keyboard.hpp>
 #include <Lucky/Input/Mouse.hpp>
 
+// #define BORDERLESS
+
 std::unique_ptr<Lucky::BatchRenderer> batchRenderer;
 std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice;
-std::shared_ptr<Lucky::BloomEffect> bloomEffect;
 
-std::shared_ptr<Lucky::Texture> forestTexture;
-std::shared_ptr<Lucky::Texture> textTexture;
+std::shared_ptr<Lucky::Texture> white;
 std::shared_ptr<Lucky::Texture> renderTarget;
-std::shared_ptr<Lucky::Texture> composite;
 
-std::shared_ptr<Lucky::ShaderProgram> scaleColorShader;
+std::shared_ptr<Lucky::ShaderProgram> circleShader;
+
+glm::vec3 mousePosition = glm::vec3(0.0f, 0.0f, 0.0f);
+float time = 0;
 
 void DebugCodeInit(std::shared_ptr<Lucky::GraphicsDevice> graphicsDevice)
 {
     batchRenderer = std::make_unique<Lucky::BatchRenderer>(graphicsDevice, 1024);
 
-    bloomEffect = std::make_unique<Lucky::BloomEffect>(1920, 1080, graphicsDevice);
+    white = std::make_shared<Lucky::Texture>("white.png", Lucky::TextureFilter::Point);
 
     Lucky::VertexShader defaultVertexShader("BatchRenderer.vert");
-    scaleColorShader = std::make_shared<Lucky::ShaderProgram>(
-        graphicsDevice, defaultVertexShader, Lucky::FragmentShader("ScaleColor.frag"));
+    circleShader = std::make_shared<Lucky::ShaderProgram>(
+        graphicsDevice, defaultVertexShader, Lucky::FragmentShader("Circle.frag"));
 
-    forestTexture = std::make_shared<Lucky::Texture>("forest.png");
-    textTexture = std::make_shared<Lucky::Texture>("bloomtext.png");
     renderTarget = std::make_shared<Lucky::Texture>(Lucky::TextureType::RenderTarget, 1920, 1080, nullptr, 0,
-        Lucky::TextureFilter::Linear, Lucky::TextureFormat::HDR);
-    composite = std::make_shared<Lucky::Texture>(Lucky::TextureType::RenderTarget, 1920, 1080, nullptr, 0,
         Lucky::TextureFilter::Linear, Lucky::TextureFormat::HDR);
 }
 
@@ -58,32 +61,40 @@ void DebugCodeCleanup()
 
 void DebugCodeUpdate(double t)
 {
+    auto &mouseState = Lucky::GetMouseState();
+    mousePosition.x = (float)mouseState.x;
+    mousePosition.y = (float)mouseState.y;
+    mousePosition.z = mouseState.buttons[Lucky::MouseButton::Left] ? 1.0f : 0.0f;
+
+    time += (float)t;
 }
 
 void DebugCodeRender()
 {
     graphicsDevice->BindRenderTarget(*renderTarget);
-    batchRenderer->Begin(Lucky::BlendMode::Alpha, forestTexture);
-    batchRenderer->BatchQuad(nullptr, glm::vec2(0.0f, 0.0f), 0, glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 0.0f),
-        Lucky::UVMode::Normal, Lucky::Color::White);
+    graphicsDevice->ClearScreen(Lucky::Color::Black);
+
+    batchRenderer->Begin(Lucky::BlendMode::Alpha, nullptr, circleShader);
+    circleShader->SetParameter("Dimensions", 1920.0f, 1080.0f);
+    circleShader->SetParameter("Radius", 100.0f);
+    circleShader->SetParameter("Border", 10.0f);
+    batchRenderer->BatchQuadUV(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(0.0, 0.0f),
+        glm::vec2(1920.0f, 1080.0f), Lucky::Color::White);
     batchRenderer->End();
 
-    batchRenderer->Begin(Lucky::BlendMode::Alpha, textTexture, scaleColorShader);
-    scaleColorShader->SetParameter("ScaleFactor", 3.0f);
-    batchRenderer->BatchQuad(nullptr, glm::vec2(0.0f, 0.0f), 0, glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 0.0f),
-        Lucky::UVMode::Normal, Lucky::Color::White);
-    batchRenderer->End();
+    graphicsDevice->UnbindRenderTarget();
 
-    bloomEffect->ApplyEffect(1.0f, renderTarget, composite, *batchRenderer);
-
-    batchRenderer->Begin(Lucky::BlendMode::None, composite);
+    batchRenderer->Begin(Lucky::BlendMode::None, renderTarget);
     batchRenderer->BatchQuadUV(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 0.0f),
         glm::vec2(1920.0f, 1080.0f), Lucky::Color::White);
     batchRenderer->End();
 }
 
-Lucky::KeyboardState previousKeyboardState, currentKeyboardState;
-Lucky::MouseState previousMouseState, currentMouseState;
+Lucky::KeyboardState keyboardState;
+Lucky::MouseState mouseState;
+
+std::deque<Lucky::GamepadEvent> gamepadEvents;
+std::map<SDL_JoystickID, Lucky::GamepadState> gamepadStates;
 
 void InitializeImGui(SDL_Window *window, void *glContext)
 {
@@ -127,16 +138,28 @@ static void ShowFPSOverlay(int updateCount, int renderCount)
     ImGui::End();
 }
 
+void GetInitialGamepadState(SDL_Gamepad *gamepad, bool *buttons, int buttonCount, int16_t *axes, int axisCount)
+{
+    for (int i = 0; i < buttonCount; i++)
+    {
+        buttons[i] = SDL_GetGamepadButton(gamepad, (SDL_GamepadButton)i);
+    }
+    for (int i = 0; i < axisCount; i++)
+    {
+        axes[i] = SDL_GetGamepadAxis(gamepad, (SDL_GamepadAxis)i);
+    }
+}
+
 int main()
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-    memset(&currentKeyboardState, 0, sizeof(currentKeyboardState));
-    memset(&previousKeyboardState, 0, sizeof(previousKeyboardState));
-    memset(&previousMouseState, 0, sizeof(currentMouseState));
-    memset(&currentMouseState, 0, sizeof(currentMouseState));
+    memset(&keyboardState, 0, sizeof(keyboardState));
+    memset(&mouseState, 0, sizeof(mouseState));
 
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+    SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+
+    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_TIMER) < 0)
     {
         SDL_Log("Failed to initialize SDL\n\t%s\n", SDL_GetError());
         return -1;
@@ -147,7 +170,12 @@ int main()
 
     auto attributes = Lucky::GraphicsDevice::PrepareWindowAttributes(Lucky::GraphicsAPI::OpenGL);
 
-    SDL_Window *window = SDL_CreateWindow("Nowhere", windowWidth, windowHeight, attributes | SDL_WINDOW_BORDERLESS);
+    SDL_Window *window = SDL_CreateWindow("Nowhere", windowWidth, windowHeight,
+        attributes
+#ifdef BORDERLESS
+            | SDL_WINDOW_BORDERLESS
+#endif
+    );
     if (window == NULL)
     {
         SDL_Log("Window could not be created\n\t%s\n", SDL_GetError());
@@ -188,8 +216,7 @@ int main()
         // Update loop
         while (accumulator >= dt && !quit)
         {
-            previousKeyboardState = currentKeyboardState;
-            previousMouseState = currentMouseState;
+            gamepadEvents.clear();
 
             t += dt;
             accumulator -= dt;
@@ -221,7 +248,7 @@ int main()
                     }
                     if (event.key.keysym.scancode >= 0 && event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
-                        currentKeyboardState.keys[event.key.keysym.scancode] = true;
+                        keyboardState.keys[event.key.keysym.scancode] = true;
                     }
 
                     break;
@@ -233,7 +260,7 @@ int main()
                     }
                     if (event.key.keysym.scancode >= 0 && event.key.keysym.scancode < Lucky::MaxKeyboardKeys)
                     {
-                        currentKeyboardState.keys[event.key.keysym.scancode] = false;
+                        keyboardState.keys[event.key.keysym.scancode] = false;
                     }
                     break;
 
@@ -244,7 +271,7 @@ int main()
                     }
                     if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
                     {
-                        currentMouseState.buttons[event.button.button] = true;
+                        mouseState.buttons[event.button.button] = true;
                     }
                     break;
 
@@ -255,7 +282,7 @@ int main()
                     }
                     if (event.button.button > 0 && event.button.button < Lucky::MaxMouseButtons)
                     {
-                        currentMouseState.buttons[event.button.button] = false;
+                        mouseState.buttons[event.button.button] = false;
                     }
                     break;
 
@@ -264,8 +291,8 @@ int main()
                     {
                         break;
                     }
-                    currentMouseState.x = event.motion.x;
-                    currentMouseState.y = event.motion.y;
+                    mouseState.x = event.motion.x;
+                    mouseState.y = event.motion.y;
                     break;
 
                 case SDL_EVENT_MOUSE_WHEEL:
@@ -275,12 +302,67 @@ int main()
                     }
                     if (event.wheel.direction != SDL_MOUSEWHEEL_FLIPPED)
                     {
-                        currentMouseState.wheelDelta += event.wheel.y;
+                        mouseState.wheelDelta += event.wheel.y;
                     }
                     else
                     {
-                        currentMouseState.wheelDelta -= event.wheel.y;
+                        mouseState.wheelDelta -= event.wheel.y;
                     }
+                    break;
+
+                case SDL_EVENT_GAMEPAD_ADDED: {
+                    printf("added\n");
+                    Lucky::GamepadState gamepadState;
+                    gamepadState.gamepad = SDL_OpenGamepad(event.gdevice.which);
+                    if (!gamepadState.gamepad)
+                    {
+                        // todo: handle this error
+                        break;
+                    }
+                    GetInitialGamepadState(gamepadState.gamepad, gamepadState.buttons, SDL_GAMEPAD_BUTTON_MAX - 1,
+                        gamepadState.axes, SDL_GAMEPAD_AXIS_MAX - 1);
+                    gamepadStates[event.gdevice.which] = gamepadState;
+                    break;
+                }
+
+                case SDL_EVENT_GAMEPAD_REMOVED:
+                    printf("removed\n");
+                    SDL_CloseGamepad(gamepadStates[event.gdevice.which].gamepad);
+                    gamepadStates.erase(event.gdevice.which);
+                    break;
+
+                case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+                    printf("button down\n");
+                    gamepadEvents.emplace_back((SDL_JoystickID)event.gbutton.which,
+                        Lucky::GamepadEventType::ButtonPressed, (SDL_GamepadButton)event.gbutton.button);
+                    gamepadStates[event.gbutton.which].buttons[event.gbutton.button] = true;
+                    break;
+
+                case SDL_EVENT_GAMEPAD_BUTTON_UP:
+                    printf("button up\n");
+                    gamepadEvents.emplace_back((SDL_JoystickID)event.gbutton.which,
+                        Lucky::GamepadEventType::ButtonReleased, (SDL_GamepadButton)event.gbutton.button);
+                    gamepadStates[event.gbutton.which].buttons[event.gbutton.button] = false;
+                    break;
+
+                case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+                    printf("axis motion\n");
+                    gamepadStates[event.gaxis.which].buttons[event.gaxis.axis] = event.gaxis.value;
+                    break;
+
+                case SDL_EVENT_GAMEPAD_TOUCHPAD_UP:
+                    // todo:
+                    // event->gtouchpad
+                    break;
+
+                case SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN:
+                    // todo:
+                    // event->gtouchpad
+                    break;
+
+                case SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION:
+                    // todo:
+                    // event->gtouchpad
                     break;
 
                 default:
@@ -351,22 +433,48 @@ int main()
     return 0;
 }
 
-const Lucky::KeyboardState &GetPreviousKeyboardState_impl()
+const Lucky::KeyboardState &GetKeyboardState_impl()
 {
-    return previousKeyboardState;
+    return keyboardState;
 }
 
-const Lucky::KeyboardState &GetCurrentKeyboardState_impl()
+const Lucky::MouseState &GetMouseState_impl()
 {
-    return currentKeyboardState;
+    return mouseState;
 }
 
-const Lucky::MouseState &GetPreviousMouseState_impl()
+bool GetGamepadEvent_impl(Lucky::GamepadEvent *event)
 {
-    return previousMouseState;
+    if (gamepadEvents.empty() || event == nullptr)
+    {
+        return false;
+    }
+
+    *event = gamepadEvents.front();
+    gamepadEvents.pop_front();
+
+    return true;
 }
 
-const Lucky::MouseState &GetCurrentMouseState_impl()
+SDL_Gamepad *GetGamepadFromJoystickId_impl(SDL_JoystickID joystickId)
 {
-    return currentMouseState;
+    auto it = gamepadStates.find(joystickId);
+    if (it == gamepadStates.end())
+    {
+        return nullptr;
+    }
+
+    return it->second.gamepad;
+}
+
+bool GetGamepadState_impl(SDL_JoystickID joystickId, Lucky::GamepadState *gamepadState)
+{
+    auto it = gamepadStates.find(joystickId);
+    if (it == gamepadStates.end())
+    {
+        return false;
+    }
+
+    *gamepadState = it->second;
+    return true;
 }

@@ -175,7 +175,7 @@ namespace Lucky
         {
             char infoLog[1024];
             int logLength;
-            glGetShaderInfoLog(id, 1024, &logLength, infoLog);
+            glGetProgramInfoLog(id, 1024, &logLength, infoLog);
             glDeleteProgram(id);
 
             spdlog::error("Shader program linking failed:\n{}", infoLog);
@@ -292,6 +292,36 @@ namespace Lucky
         spv.f1 = value1;
         spv.f2 = value2;
         spv.f3 = value3;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const glm::vec2 &value)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float2;
+        spv.f0 = value.x;
+        spv.f1 = value.y;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const glm::vec3 &value)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float3;
+        spv.f0 = value.x;
+        spv.f1 = value.y;
+        spv.f2 = value.z;
+        parameterValues[name] = spv;
+    }
+
+    void ShaderProgram::SetParameter(const std::string &name, const glm::vec4 &value)
+    {
+        ShaderParameterValue spv;
+        spv.parameterType = ShaderParameterType::Float4;
+        spv.f0 = value.x;
+        spv.f1 = value.y;
+        spv.f2 = value.z;
+        spv.f3 = value.w;
         parameterValues[name] = spv;
     }
 

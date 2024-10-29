@@ -21,9 +21,5 @@ namespace Lucky
         bool buttons[MaxMouseButtons];
     };
 
-    const MouseState &GetPreviousMouseState();
-    const MouseState &GetCurrentMouseState();
-
-    bool MouseButtonPressed(int mouseButton);
-    bool MouseButtonReleased(int mouseButton);
+    const MouseState &GetMouseState();
 } // namespace Lucky

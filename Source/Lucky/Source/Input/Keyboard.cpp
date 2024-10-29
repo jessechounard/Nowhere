@@ -1,17 +1,11 @@
 #include <Lucky/Input/Keyboard.hpp>
 
-const Lucky::KeyboardState &GetPreviousKeyboardState_impl();
-const Lucky::KeyboardState &GetCurrentKeyboardState_impl();
+const Lucky::KeyboardState &GetKeyboardState_impl();
 
 namespace Lucky
 {
-    const KeyboardState &GetPreviousKeyboardState()
+    const KeyboardState &GetKeyboardState()
     {
-        return GetPreviousKeyboardState_impl();
-    }
-
-    const KeyboardState &GetCurrentKeyboardState()
-    {
-        return GetCurrentKeyboardState_impl();
+        return GetKeyboardState_impl();
     }
 } // namespace Lucky
