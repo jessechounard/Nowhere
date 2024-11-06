@@ -28,7 +28,7 @@ imgui - Bloat-free Graphical User interface for C++ with minimal dependencies
 	License: MIT
 
 rapidjson - header only JSON parser/generator
-	Downloaded from github on 3/30/2024, version v1.1.0
+	Downloaded from github on 11/6/2024 (clone of master branch)
 	https://github.com/Tencent/rapidjson/
 	License: Happy Bunny / MIT
 
