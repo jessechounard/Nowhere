@@ -152,7 +152,7 @@ namespace Lucky
     }
 
     ShaderProgram::ShaderProgram(
-        std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader, FragmentShader &fragmentShader)
+        std::shared_ptr<GraphicsDevice> graphicsDevice, const VertexShader &vertexShader, const FragmentShader &fragmentShader)
         : graphicsDevice(graphicsDevice)
     {
         assert(graphicsDevice);

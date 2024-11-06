@@ -72,7 +72,7 @@ namespace Lucky
     {
       public:
         ShaderProgram(
-            std::shared_ptr<GraphicsDevice> graphicsDevice, VertexShader &vertexShader, FragmentShader &fragmentShader);
+            std::shared_ptr<GraphicsDevice> graphicsDevice, const VertexShader &vertexShader, const FragmentShader &fragmentShader);
         ShaderProgram(const ShaderProgram &) = delete;
         ~ShaderProgram();
 
